@@ -130,7 +130,7 @@
   <data name="ToolButtonStart.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAO5SURBVFhHrZe5SyVBEMYfCIqCieKBgf+EIJqZaKyCqYKg
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAO5SURBVFhHrZe5SyVBEMYfCIqCieKBgf+EIJqZaKyCqYKg
         aCCaGZkYGImIYGRuoiAYmRgYKBiYCCYm3vd939TyK6jZerPl+nb1wfe6p6eOr6uramYye3t7AnZ3d2Vn
         ZyeZp6/9+mdzgA6wub+HrMHuZbyQvwHSBk5OTuT6+loeHx/l9fVV8fLyotc3NzdydnYm+/v7KmvEGLe3
         t3Ue+crYgiFNAMGrqyv5+PiQxcVF6evrk/r6eqmsrJSioiIpKyuTmpoa6erqkrm5OXl/f5fb21s5ODjI
@@ -152,7 +152,7 @@
   <data name="ToolButtonStop.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAPiSURBVFhHrZe7L21REMZ3JRGFkPAHiEQpIiQiCiriUahE
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAPiSURBVFhHrZe7L21REMZ3JRGFkPAHiEQpIiQiCiriUahE
         J9FS6hQKDRJBSHQqvRYRBRKiUUjoON7v9/sxN7+ROXfOtu497uUkn73XrFkz35qZNXuJjo6OxHB8fKzw
         MsPh4WFy/uTkRM7OzuTy8lLOz8/l9PQ0OYeeX2cymzf5wcGBJBIJifizs7Mj29vbKtja2tL3+JhFV1dX
         8vLyIhcXF7K6uipzc3OyuLio65Hf3t4qMW8P8B6XGZIETOAVeWe3GJ+dnZXm5mbJzMyUKIqCqKiokNHR
@@ -175,7 +175,7 @@
   <data name="ToolButtonConnection.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAKNSURBVFhH7ZTvS1NRGMd7k75uQmqaptNpvtEXtQQNsdBt
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKNSURBVFhH7ZTvS1NRGMd7k75uQmqaptNpvtEXtQQNsdBt
         bbTJWBOdOFxOl81FSyurkYThbOlmm/Uqilj0Q9LISGtswx85I0mi/+fbOQ8ol9vFjWYIcV98OOc8z3PO
         87l35+7Ar60U9hNZQBb4vwSeRIKoOV5F4/Zcqk7Ingk8Dk+hukoFj8dDI4fHpGqFZCUwE55EZaVyB7fb
         DZvNBofDQWuel9onJCsBZXkZvF4vXC4X7HY7rFYrjEYjDAYDzGYz5aX2CclKIDIdwLHSEhLgDfV6PbRa

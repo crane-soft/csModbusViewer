@@ -50,6 +50,8 @@
             this.ToolButtonConnection = new System.Windows.Forms.ToolStripButton();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.ViewPanel = new csModbusViewer.MbViewPanel();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuStrip1.SuspendLayout();
             this.StatusStrip1.SuspendLayout();
             this.mainToolBar.SuspendLayout();
@@ -67,22 +69,24 @@
             this.MenuStrip1.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip1.Name = "MenuStrip1";
             this.MenuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.MenuStrip1.Size = new System.Drawing.Size(948, 28);
+            this.MenuStrip1.Size = new System.Drawing.Size(948, 24);
             this.MenuStrip1.TabIndex = 0;
             this.MenuStrip1.Text = "MenuStrip1";
             // 
             // FileToolStripMenuItem
             // 
             this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.toolStripSeparator1,
             this.ExitToolStripMenuItem});
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.FileToolStripMenuItem.Text = "File";
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(108, 26);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ExitToolStripMenuItem.Text = "Exit";
             // 
             // OptionsToolStripMenuItem
@@ -91,20 +95,20 @@
             this.SettingsToolStripMenuItem,
             this.designerToolStripMenuItem});
             this.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem";
-            this.OptionsToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
+            this.OptionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.OptionsToolStripMenuItem.Text = "Options";
             // 
             // SettingsToolStripMenuItem
             // 
             this.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
-            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(173, 26);
+            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.SettingsToolStripMenuItem.Text = "Settings";
             // 
             // designerToolStripMenuItem
             // 
             this.designerToolStripMenuItem.CheckOnClick = true;
             this.designerToolStripMenuItem.Name = "designerToolStripMenuItem";
-            this.designerToolStripMenuItem.Size = new System.Drawing.Size(173, 26);
+            this.designerToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.designerToolStripMenuItem.Text = "Design Mode";
             // 
             // StatusStrip1
@@ -117,49 +121,49 @@
             this.LbLastModbusException,
             this.springLabel,
             this.StatusLabelCount});
-            this.StatusStrip1.Location = new System.Drawing.Point(0, 497);
+            this.StatusStrip1.Location = new System.Drawing.Point(0, 500);
             this.StatusStrip1.Name = "StatusStrip1";
             this.StatusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.StatusStrip1.Size = new System.Drawing.Size(948, 25);
+            this.StatusStrip1.Size = new System.Drawing.Size(948, 22);
             this.StatusStrip1.TabIndex = 6;
             this.StatusStrip1.Text = "StatusStrip1";
             // 
             // lbConnectionOptions
             // 
             this.lbConnectionOptions.Name = "lbConnectionOptions";
-            this.lbConnectionOptions.Size = new System.Drawing.Size(84, 20);
+            this.lbConnectionOptions.Size = new System.Drawing.Size(69, 17);
             this.lbConnectionOptions.Text = "Connection";
             // 
             // lbLastError
             // 
             this.lbLastError.Margin = new System.Windows.Forms.Padding(20, 3, 0, 2);
             this.lbLastError.Name = "lbLastError";
-            this.lbLastError.Size = new System.Drawing.Size(65, 20);
+            this.lbLastError.Size = new System.Drawing.Size(51, 17);
             this.lbLastError.Text = "No Error";
             // 
             // StatusErrorCount
             // 
             this.StatusErrorCount.Name = "StatusErrorCount";
-            this.StatusErrorCount.Size = new System.Drawing.Size(47, 20);
+            this.StatusErrorCount.Size = new System.Drawing.Size(37, 17);
             this.StatusErrorCount.Text = "Errors";
             // 
             // LbLastModbusException
             // 
             this.LbLastModbusException.Margin = new System.Windows.Forms.Padding(10, 3, 0, 2);
             this.LbLastModbusException.Name = "LbLastModbusException";
-            this.LbLastModbusException.Size = new System.Drawing.Size(15, 20);
+            this.LbLastModbusException.Size = new System.Drawing.Size(12, 17);
             this.LbLastModbusException.Text = "-";
             // 
             // springLabel
             // 
             this.springLabel.Name = "springLabel";
-            this.springLabel.Size = new System.Drawing.Size(672, 20);
+            this.springLabel.Size = new System.Drawing.Size(717, 17);
             this.springLabel.Spring = true;
             // 
             // StatusLabelCount
             // 
             this.StatusLabelCount.Name = "StatusLabelCount";
-            this.StatusLabelCount.Size = new System.Drawing.Size(15, 20);
+            this.StatusLabelCount.Size = new System.Drawing.Size(12, 17);
             this.StatusLabelCount.Text = "-";
             // 
             // mainToolBar
@@ -169,7 +173,7 @@
             this.ToolButtonStart,
             this.ToolButtonStop,
             this.ToolButtonConnection});
-            this.mainToolBar.Location = new System.Drawing.Point(0, 28);
+            this.mainToolBar.Location = new System.Drawing.Point(0, 24);
             this.mainToolBar.Name = "mainToolBar";
             this.mainToolBar.Size = new System.Drawing.Size(948, 39);
             this.mainToolBar.TabIndex = 12;
@@ -208,13 +212,13 @@
             // mainSplitContainer
             // 
             this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainSplitContainer.Location = new System.Drawing.Point(0, 67);
+            this.mainSplitContainer.Location = new System.Drawing.Point(0, 63);
             this.mainSplitContainer.Name = "mainSplitContainer";
             // 
             // mainSplitContainer.Panel1
             // 
             this.mainSplitContainer.Panel1.Controls.Add(this.ViewPanel);
-            this.mainSplitContainer.Size = new System.Drawing.Size(948, 430);
+            this.mainSplitContainer.Size = new System.Drawing.Size(948, 437);
             this.mainSplitContainer.SplitterDistance = 700;
             this.mainSplitContainer.TabIndex = 13;
             // 
@@ -224,18 +228,30 @@
             this.ViewPanel.Location = new System.Drawing.Point(0, 0);
             this.ViewPanel.Margin = new System.Windows.Forms.Padding(4);
             this.ViewPanel.Name = "ViewPanel";
-            this.ViewPanel.Size = new System.Drawing.Size(700, 430);
+            this.ViewPanel.Size = new System.Drawing.Size(700, 437);
             this.ViewPanel.TabIndex = 11;
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // frmcsModbusViewer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(948, 522);
             this.Controls.Add(this.mainSplitContainer);
             this.Controls.Add(this.mainToolBar);
             this.Controls.Add(this.StatusStrip1);
             this.Controls.Add(this.MenuStrip1);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MainMenuStrip = this.MenuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmcsModbusViewer";
@@ -274,6 +290,8 @@
         private System.Windows.Forms.ToolStripButton ToolButtonStop;
         private System.Windows.Forms.ToolStripButton ToolButtonConnection;
         private System.Windows.Forms.SplitContainer mainSplitContainer;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

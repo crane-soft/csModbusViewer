@@ -1,0 +1,46 @@
+[
+  {
+    "$type": "csModbusView.MasterHoldingRegsGridView, csModbusView",
+    "Title": "Holding Regs 2",
+    "BaseAddr": 20,
+    "NumItems": 5,
+    "ItemColumns": 1,
+    "ItemNames": null,
+    "Location": "3, 171",
+    "Name": "HoldingRegs2",
+    "Size": "124, 108"
+  },
+  {
+    "$type": "csModbusView.MasterHoldingRegsGridView, csModbusView",
+    "Title": "Holding Regs 1",
+    "BaseAddr": 10,
+    "NumItems": 8,
+    "ItemColumns": 1,
+    "ItemNames": null,
+    "Location": "3, 3",
+    "Name": "HoldingRegs1",
+    "Size": "124, 162"
+  },
+  {
+    "$type": "csModbusView.MasterCoilsGridView, csModbusView",
+    "Title": "Coils",
+    "BaseAddr": 10,
+    "NumItems": 20,
+    "ItemColumns": 8,
+    "ItemNames": null,
+    "Location": "144, 0",
+    "Name": "",
+    "Size": "186, 72"
+  },
+  {
+    "$type": "csModbusView.MasterDiscretInputsGridView, csModbusView",
+    "Title": "DiscretInputs",
+    "BaseAddr": 20,
+    "NumItems": 20,
+    "ItemColumns": 8,
+    "ItemNames": null,
+    "Location": "144, 72",
+    "Name": "",
+    "Size": "186, 72"
+  }
+]

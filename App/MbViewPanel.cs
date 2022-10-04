@@ -16,7 +16,6 @@ namespace csModbusViewer
     class MbViewPanel : Panel
     {
         private List<ModbusView> ModbusViewList;
-        private MbViewJson mbser = new MbViewJson(@"mbviewerdefault.jsdon");
         private csControlDesigner controldesigner;
 
         public MbViewPanel()
@@ -31,14 +30,16 @@ namespace csModbusViewer
             }
         }
 
-        public List<ModbusView> DeserializeModbusViews(MbMaster ModMaster)
+        public List<ModbusView> DeserializeModbusViews(string jsonPath)
         {
+            MbViewJson mbser = new MbViewJson(jsonPath);
+
             ModbusViewList = new List<ModbusView>();
+            this.Controls.Clear();
             try {
                 ModbusViewList = mbser.Deserialize();
                 foreach (MasterGridView mbView in ModbusViewList) {
                     this.Controls.Add(mbView);
-                    mbView.InitGridView(ModMaster);
                 }
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Deserialize");

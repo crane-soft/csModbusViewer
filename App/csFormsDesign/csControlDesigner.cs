@@ -54,8 +54,8 @@ namespace csFormsDesign
             if (clickedCover != selectedCover) {
                 DeselecControl();
                 AssignCover(clickedCover);
-                //properties.SelectedObject =  clickedCover.assignedControl;
-                properties.SelectedObject = new CustomObjectWrapper(clickedCover.assignedControl);
+                properties.SelectedObject =  clickedCover.assignedControl;
+                //properties.SelectedObject = new CustomObjectWrapper(clickedCover.assignedControl);
             }
         }
         public void DeselecControl()

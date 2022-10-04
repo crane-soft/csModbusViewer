@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using csModbusLib;
-
+using csModbusViewer.Properties;
 namespace csModbusViewer
 {
     public partial class dlgOptions : Form
@@ -47,26 +47,26 @@ namespace csModbusViewer
             if (gConnectionIfc != null)
                 cbMode.Text = gConnectionIfc;
             else
-                cbMode.Text = Properties.Settings.Default.Connection;
+                cbMode.Text = Settings.Default.Connection;
 
-            tbSlaveID.Text = Properties.Settings.Default.SlaveID.ToString();
-            tbTCPport.Text = Properties.Settings.Default.TCPport.ToString();
-            tbComPort.Text = Properties.Settings.Default.ComPort;
-            cbBaud.Text = Properties.Settings.Default.Baudrate.ToString();
+            tbSlaveID.Text = Settings.Default.SlaveID.ToString();
+            tbTCPport.Text = Settings.Default.TCPport.ToString();
+            tbComPort.Text = Settings.Default.ComPort;
+            cbBaud.Text = Settings.Default.Baudrate.ToString();
             if (gDeviceType == csModbusLib.DeviceType.MASTER)
-                tbHostname.Text = Properties.Settings.Default.Hostname;
+                tbHostname.Text = Settings.Default.Hostname;
         }
 
         private void OK_Button_Click(System.Object sender, System.EventArgs e)
         {
-            Properties.Settings.Default.Connection = cbMode.Text;
-            Properties.Settings.Default.SlaveID = Convert.ToInt32(tbSlaveID.Text);
-            Properties.Settings.Default.TCPport = Convert.ToInt32(tbTCPport.Text);
-            Properties.Settings.Default.ComPort = tbComPort.Text;
-            Properties.Settings.Default.Baudrate = Convert.ToInt32(cbBaud.Text);
+            Settings.Default.Connection = cbMode.Text;
+            Settings.Default.SlaveID = Convert.ToInt32(tbSlaveID.Text);
+            Settings.Default.TCPport = Convert.ToInt32(tbTCPport.Text);
+            Settings.Default.ComPort = tbComPort.Text;
+            Settings.Default.Baudrate = Convert.ToInt32(cbBaud.Text);
             if (gDeviceType == csModbusLib.DeviceType.MASTER)
-                Properties.Settings.Default.Hostname = tbHostname.Text;
-            Properties.Settings.Default.Save();
+                Settings.Default.Hostname = tbHostname.Text;
+            Settings.Default.Save();
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
         }

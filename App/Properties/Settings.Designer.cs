@@ -94,5 +94,29 @@ namespace csModbusViewer.Properties {
                 this["Hostname"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string JsonFolder {
+            get {
+                return ((string)(this["JsonFolder"]));
+            }
+            set {
+                this["JsonFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string JsonPath {
+            get {
+                return ((string)(this["JsonPath"]));
+            }
+            set {
+                this["JsonPath"] = value;
+            }
+        }
     }
 }

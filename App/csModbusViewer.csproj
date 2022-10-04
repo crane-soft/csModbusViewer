@@ -7,8 +7,8 @@
     <ProjectGuid>{531253FF-D771-40E3-96FD-DC11EAC2CCD8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>csModMaster</RootNamespace>
-    <AssemblyName>csModMaster</AssemblyName>
+    <RootNamespace>csModbusViewer</RootNamespace>
+    <AssemblyName>csModbusViewer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,7 +43,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 12.0\Blend\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Blend\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -80,12 +80,15 @@
     <Compile Include="frmcsModbusViewer.Designer.cs">
       <DependentUpon>frmcsModbusViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="MasterViewer.cs" />
     <Compile Include="MbViewJson.cs" />
     <Compile Include="MbViewPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlaveViewer.cs" />
+    <Compile Include="ViewerBase.cs" />
     <EmbeddedResource Include="dlgOptions.resx">
       <DependentUpon>dlgOptions.cs</DependentUpon>
     </EmbeddedResource>

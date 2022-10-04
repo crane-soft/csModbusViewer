@@ -7,11 +7,9 @@ using System.ComponentModel;
 using System.Reflection;
 using csModbusView;
 
-// https://stackoverflow.com/questions/51611870/hide-some-properties-in-propertygrid-at-run-time
-// https://www.codeproject.com/Articles/11383/Hiding-Inherited-Properties-from-the-PropertyGrid
-
 namespace csFormsDesign
 {
+    // This is the one, which I'm using
     public class CustomObjectWrapper : CustomTypeDescriptor
     {
         public object WrappedObject { get; private set; }
