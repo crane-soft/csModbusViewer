@@ -33,6 +33,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmcsModbusViewer));
             this.MenuStrip1 = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,9 +54,9 @@
             this.ToolButtonStop = new System.Windows.Forms.ToolStripButton();
             this.ToolButtonConnection = new System.Windows.Forms.ToolStripButton();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.lbDeviceType = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelSpace = new System.Windows.Forms.ToolStripLabel();
             this.ViewPanel = new csModbusViewer.MbViewPanel();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuStrip1.SuspendLayout();
             this.StatusStrip1.SuspendLayout();
             this.mainToolBar.SuspendLayout();
@@ -69,7 +74,7 @@
             this.MenuStrip1.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip1.Name = "MenuStrip1";
             this.MenuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.MenuStrip1.Size = new System.Drawing.Size(948, 24);
+            this.MenuStrip1.Size = new System.Drawing.Size(554, 24);
             this.MenuStrip1.TabIndex = 0;
             this.MenuStrip1.Text = "MenuStrip1";
             // 
@@ -78,15 +83,46 @@
             this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.toolStripSeparator1,
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.toolStripSeparator2,
             this.ExitToolStripMenuItem});
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
             this.FileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.FileToolStripMenuItem.Text = "File";
             // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(109, 6);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.saveAsToolStripMenuItem.Text = "Save as";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(109, 6);
+            // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.ExitToolStripMenuItem.Text = "Exit";
             // 
             // OptionsToolStripMenuItem
@@ -121,10 +157,10 @@
             this.LbLastModbusException,
             this.springLabel,
             this.StatusLabelCount});
-            this.StatusStrip1.Location = new System.Drawing.Point(0, 500);
+            this.StatusStrip1.Location = new System.Drawing.Point(0, 419);
             this.StatusStrip1.Name = "StatusStrip1";
             this.StatusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.StatusStrip1.Size = new System.Drawing.Size(948, 22);
+            this.StatusStrip1.Size = new System.Drawing.Size(554, 22);
             this.StatusStrip1.TabIndex = 6;
             this.StatusStrip1.Text = "StatusStrip1";
             // 
@@ -157,7 +193,7 @@
             // springLabel
             // 
             this.springLabel.Name = "springLabel";
-            this.springLabel.Size = new System.Drawing.Size(717, 17);
+            this.springLabel.Size = new System.Drawing.Size(323, 17);
             this.springLabel.Spring = true;
             // 
             // StatusLabelCount
@@ -168,14 +204,17 @@
             // 
             // mainToolBar
             // 
+            this.mainToolBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mainToolBar.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.mainToolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolButtonStart,
             this.ToolButtonStop,
-            this.ToolButtonConnection});
+            this.ToolButtonConnection,
+            this.toolStripLabelSpace,
+            this.lbDeviceType});
             this.mainToolBar.Location = new System.Drawing.Point(0, 24);
             this.mainToolBar.Name = "mainToolBar";
-            this.mainToolBar.Size = new System.Drawing.Size(948, 39);
+            this.mainToolBar.Size = new System.Drawing.Size(554, 39);
             this.mainToolBar.TabIndex = 12;
             this.mainToolBar.Text = "toolStrip1";
             // 
@@ -218,9 +257,23 @@
             // mainSplitContainer.Panel1
             // 
             this.mainSplitContainer.Panel1.Controls.Add(this.ViewPanel);
-            this.mainSplitContainer.Size = new System.Drawing.Size(948, 437);
-            this.mainSplitContainer.SplitterDistance = 700;
+            this.mainSplitContainer.Size = new System.Drawing.Size(554, 356);
+            this.mainSplitContainer.SplitterDistance = 409;
             this.mainSplitContainer.TabIndex = 13;
+            // 
+            // lbDeviceType
+            // 
+            this.lbDeviceType.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lbDeviceType.Name = "lbDeviceType";
+            this.lbDeviceType.Size = new System.Drawing.Size(71, 36);
+            this.lbDeviceType.Text = "Devicetype";
+            // 
+            // toolStripLabelSpace
+            // 
+            this.toolStripLabelSpace.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabelSpace.AutoSize = false;
+            this.toolStripLabelSpace.Name = "toolStripLabelSpace";
+            this.toolStripLabelSpace.Size = new System.Drawing.Size(40, 36);
             // 
             // ViewPanel
             // 
@@ -228,25 +281,14 @@
             this.ViewPanel.Location = new System.Drawing.Point(0, 0);
             this.ViewPanel.Margin = new System.Windows.Forms.Padding(4);
             this.ViewPanel.Name = "ViewPanel";
-            this.ViewPanel.Size = new System.Drawing.Size(700, 437);
+            this.ViewPanel.Size = new System.Drawing.Size(409, 356);
             this.ViewPanel.TabIndex = 11;
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // frmcsModbusViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(948, 522);
+            this.ClientSize = new System.Drawing.Size(554, 441);
             this.Controls.Add(this.mainSplitContainer);
             this.Controls.Add(this.mainToolBar);
             this.Controls.Add(this.StatusStrip1);
@@ -255,7 +297,7 @@
             this.MainMenuStrip = this.MenuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmcsModbusViewer";
-            this.Text = "cs Modbus Viewer";
+            this.Text = "csModbusViewer";
             this.MenuStrip1.ResumeLayout(false);
             this.MenuStrip1.PerformLayout();
             this.StatusStrip1.ResumeLayout(false);
@@ -292,6 +334,11 @@
         private System.Windows.Forms.SplitContainer mainSplitContainer;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripLabel lbDeviceType;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelSpace;
     }
 }
 

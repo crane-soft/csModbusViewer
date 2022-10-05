@@ -33,6 +33,7 @@ namespace csModbusViewer
 
             this.SettingsToolStripMenuItem.Click += ConnectionSettings;
             this.openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
+            this.saveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
             this.ExitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             this.designerToolStripMenuItem.CheckedChanged += DesignerToolStripMenuItem_CheckedChanged;
             this.ToolButtonStart.Click  += cmStart_Click;
@@ -58,8 +59,17 @@ namespace csModbusViewer
                 MbViewer.ErrorCodeEvent += Invoke_DisplayErrorCode;
                 MbViewer.SetViewList(ModbusViewList);
                 InitConnection();
-            }
 
+                this.Text = System.IO.Path.GetFileNameWithoutExtension(JsonPath) + " - " + this.Text;
+                ViewerType = DeviceType.MASTER;
+                if (ViewerType == DeviceType.MASTER) {
+                    lbDeviceType.Text = "Modbus Master";
+                } else if (ViewerType == DeviceType.SLAVE) {
+                    lbDeviceType.Text = "Modbus Master";
+                } else {
+                    lbDeviceType.Text = "Type unknown";
+                }
+            }
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -85,6 +95,24 @@ namespace csModbusViewer
             }
         }
 
+        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string jsonFolder = Settings.Default.JsonFolder;
+            
+            SaveFileDialog ofDlg = new SaveFileDialog() {
+                //FileName = "Select a json file",
+                Filter = "json files (*.json)|*.json",
+                Title = "Save modbus profile",
+                InitialDirectory = ""
+            };
+            if (jsonFolder.Length > 0) {
+                ofDlg.InitialDirectory = jsonFolder;
+            }
+            if (ofDlg.ShowDialog() == DialogResult.OK) {
+                string JsonPath = ofDlg.FileName;
+                this.ViewPanel.SerializeModbusViews(JsonPath);
+            }
+        }
         private void DesignerToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (designerToolStripMenuItem.Checked) {

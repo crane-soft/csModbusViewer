@@ -35,12 +35,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
-    <Reference Include="csModbusLib">
-      <HintPath>..\..\..\Bin\csModbusLib.dll</HintPath>
-    </Reference>
-    <Reference Include="csModbusView">
-      <HintPath>..\..\..\Bin\csModbusView.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Blend\Newtonsoft.Json.dll</HintPath>
@@ -117,6 +111,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\csModbus\ClassLib\csModbusLib\csModbus.csproj">
+      <Project>{f8211969-5aa8-4dc6-8818-8f735832448b}</Project>
+      <Name>csModbus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\csModbus\ClassLib\csModbusView\csModbusView.csproj">
+      <Project>{ecfac56e-d574-4f0d-a89b-6dcc209de7c3}</Project>
+      <Name>csModbusView</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

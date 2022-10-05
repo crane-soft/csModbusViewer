@@ -47,6 +47,23 @@ namespace csModbusViewer
             return ModbusViewList;
         }
 
+        public void SerializeModbusViews(string jsonPath)
+        {
+            MbViewProfile mbProfile = new MbViewProfile() {
+                DeviceType = DeviceType.MASTER,
+                ViewSize = new Size(this.Width, this.Height),
+                ModbusViewList = ModbusViewList
+            };
+
+            MbViewJson mbser = new MbViewJson(jsonPath);
+            try {
+                mbser.Serialize(mbProfile);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, "Deserialize");
+            }
+
+        }
+
         public void EnableDesignMode(PropertyGrid properties)
         {
             controldesigner = new csControlDesigner(properties);

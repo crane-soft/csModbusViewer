@@ -4,14 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using csModbusLib;
 using csModbusView;
 using Newtonsoft.Json;
 using System.Drawing;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
 
+
 namespace csModbusViewer
 {
+    public class MbViewProfile
+    {
+        public csModbusLib.DeviceType DeviceType { get; set; }
+        public Size ViewSize { get; set; }
+        public List<ModbusView> ModbusViewList { get; set; }
+    }
+
     class MbViewJson
     {
         private string jsonFileName;
@@ -22,7 +31,9 @@ namespace csModbusViewer
 
         public class ModbusViewContractResolver : DefaultContractResolver
         {
-            private string[] propertyList = { "Name","Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames", "Location", "Size" };
+            private string[] propertyList = {
+                "DeviceType","ViewSize","ModbusViewList",
+                "Name","Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames", "Location", "Size" };
 
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
             {
@@ -35,13 +46,16 @@ namespace csModbusViewer
 
         }
 
-        public void Serialize(List<ModbusView> ModbusViewList)
+        public void Serialize(MbViewProfile mbProfile)
         {
             var settings = new JsonSerializerSettings {
                 ContractResolver = new ModbusViewContractResolver(),
-                TypeNameHandling = TypeNameHandling.Auto
+                TypeNameHandling = TypeNameHandling.Auto,
+                // Passende Property Decoration: [DefaultValue(30)]
+                DefaultValueHandling = DefaultValueHandling.Ignore
             };
-            string jsonStr = JsonConvert.SerializeObject(ModbusViewList, Formatting.Indented, settings);
+
+            string jsonStr = JsonConvert.SerializeObject(mbProfile, Formatting.Indented, settings);
             System.IO.File.WriteAllText(jsonFileName, jsonStr);
           }
 
