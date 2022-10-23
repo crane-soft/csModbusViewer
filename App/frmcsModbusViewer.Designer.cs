@@ -53,9 +53,9 @@
             this.ToolButtonStart = new System.Windows.Forms.ToolStripButton();
             this.ToolButtonStop = new System.Windows.Forms.ToolStripButton();
             this.ToolButtonConnection = new System.Windows.Forms.ToolStripButton();
-            this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.lbDeviceType = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelSpace = new System.Windows.Forms.ToolStripLabel();
+            this.lbDeviceType = new System.Windows.Forms.ToolStripLabel();
+            this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.ViewPanel = new csModbusViewer.MbViewPanel();
             this.MenuStrip1.SuspendLayout();
             this.StatusStrip1.SuspendLayout();
@@ -248,6 +248,20 @@
             this.ToolButtonConnection.Size = new System.Drawing.Size(36, 36);
             this.ToolButtonConnection.Text = "Connection Oprions";
             // 
+            // toolStripLabelSpace
+            // 
+            this.toolStripLabelSpace.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabelSpace.AutoSize = false;
+            this.toolStripLabelSpace.Name = "toolStripLabelSpace";
+            this.toolStripLabelSpace.Size = new System.Drawing.Size(40, 36);
+            // 
+            // lbDeviceType
+            // 
+            this.lbDeviceType.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lbDeviceType.Name = "lbDeviceType";
+            this.lbDeviceType.Size = new System.Drawing.Size(71, 36);
+            this.lbDeviceType.Text = "Devicetype";
+            // 
             // mainSplitContainer
             // 
             this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -260,20 +274,6 @@
             this.mainSplitContainer.Size = new System.Drawing.Size(554, 356);
             this.mainSplitContainer.SplitterDistance = 409;
             this.mainSplitContainer.TabIndex = 13;
-            // 
-            // lbDeviceType
-            // 
-            this.lbDeviceType.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.lbDeviceType.Name = "lbDeviceType";
-            this.lbDeviceType.Size = new System.Drawing.Size(71, 36);
-            this.lbDeviceType.Text = "Devicetype";
-            // 
-            // toolStripLabelSpace
-            // 
-            this.toolStripLabelSpace.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabelSpace.AutoSize = false;
-            this.toolStripLabelSpace.Name = "toolStripLabelSpace";
-            this.toolStripLabelSpace.Size = new System.Drawing.Size(40, 36);
             // 
             // ViewPanel
             // 

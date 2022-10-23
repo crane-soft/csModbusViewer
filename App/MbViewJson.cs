@@ -10,13 +10,13 @@ using Newtonsoft.Json;
 using System.Drawing;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
-
+using Newtonsoft.Json.Linq;
 
 namespace csModbusViewer
 {
     public class MbViewProfile
     {
-        public csModbusLib.DeviceType DeviceType { get; set; }
+        public string DeviceType { get; set; }
         public Size ViewSize { get; set; }
         public List<ModbusView> ModbusViewList { get; set; }
     }
@@ -31,19 +31,34 @@ namespace csModbusViewer
 
         public class ModbusViewContractResolver : DefaultContractResolver
         {
-            private string[] propertyList = {
-                "DeviceType","ViewSize","ModbusViewList",
+            private string[] otherPropertyList = {
+                "DeviceType","ViewSize","ModbusViewList" };
+
+            private string[] mbViewPropertyList = {
                 "Name","Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames", "Location", "Size" };
 
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
             {
-                if (Array.IndexOf(propertyList, member.Name) >= 0) {
+                if (Array.IndexOf(mbViewPropertyList, member.Name) >= 0) {
+                    var property = base.CreateProperty(member, memberSerialization);
+                    if (property.PropertyName == "Name") {
+                        property.ShouldSerialize =
+                            instance => {
+                                ModbusView mv = (ModbusView)instance;
+                                return mv.Name.Length > 0;
+                            };
+                    }
+                    return property;
+                }
+
+
+                if (Array.IndexOf(otherPropertyList, member.Name) >= 0) {
                     var property = base.CreateProperty(member, memberSerialization);
                     return property;
                 }
+
                 return null;
             }
-
         }
 
         public void Serialize(MbViewProfile mbProfile)
@@ -56,18 +71,34 @@ namespace csModbusViewer
             };
 
             string jsonStr = JsonConvert.SerializeObject(mbProfile, Formatting.Indented, settings);
+            jsonStr = jsonStr.Replace("csModbusView.Master", "csModbusView.");
             System.IO.File.WriteAllText(jsonFileName, jsonStr);
           }
 
-        public List<ModbusView> Deserialize()
+        public MbViewProfile Deserialize()
         {
             string jsonStr = System.IO.File.ReadAllText(jsonFileName);
+
+            csModbusLib.DeviceType DeviceType = csModbusLib.DeviceType.NO_TYPE;
+            var jObject = JObject.Parse(jsonStr);
+            var jToken = jObject.GetValue("DeviceType");
+
+            if (jToken.Value<string>() == csModbusLib.DeviceType.MASTER.ToString()) {
+                DeviceType = csModbusLib.DeviceType.MASTER;
+                jsonStr = jsonStr.Replace("csModbusView.", "csModbusView.Master");
+            } else if (jToken.Value<string>() == csModbusLib.DeviceType.SLAVE.ToString()) {
+                DeviceType = csModbusLib.DeviceType.SLAVE;
+                jsonStr = jsonStr.Replace("csModbusView.", "csModbusView.Slave");
+            } else {
+                throw new Exception("unknown Devicetype ");
+            }
 
             var settings = new JsonSerializerSettings {
                 TypeNameHandling = TypeNameHandling.Auto
             };
-            List<ModbusView> outList = JsonConvert.DeserializeObject<List<ModbusView>>(jsonStr, settings);
-            return outList;
+
+            MbViewProfile mbProfile = JsonConvert.DeserializeObject<MbViewProfile>(jsonStr, settings);
+            return mbProfile;
         }
     }
 }

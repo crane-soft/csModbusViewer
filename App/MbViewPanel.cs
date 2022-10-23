@@ -34,24 +34,28 @@ namespace csModbusViewer
         {
             MbViewJson mbser = new MbViewJson(jsonPath);
 
-            ModbusViewList = new List<ModbusView>();
-            this.Controls.Clear();
+            MbViewProfile mbProfile = null;
             try {
-                ModbusViewList = mbser.Deserialize();
-                foreach (MasterGridView mbView in ModbusViewList) {
+                mbProfile = mbser.Deserialize();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, "DeserializeModbusViews");
+            }
+            if (mbProfile != null) {
+                this.Size = mbProfile.ViewSize;
+                // TODO Size cannoz be set here must be don in Splitpanel
+                this.Controls.Clear();
+                foreach (MasterGridView mbView in mbProfile.ModbusViewList) {
                     this.Controls.Add(mbView);
                 }
-            } catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Deserialize");
             }
-            return ModbusViewList;
+            return mbProfile.ModbusViewList;
         }
 
         public void SerializeModbusViews(string jsonPath)
         {
             MbViewProfile mbProfile = new MbViewProfile() {
-                DeviceType = DeviceType.MASTER,
-                ViewSize = new Size(this.Width, this.Height),
+                DeviceType = DeviceType.MASTER.ToString(),
+                ViewSize = this.Size, 
                 ModbusViewList = ModbusViewList
             };
 
@@ -59,9 +63,8 @@ namespace csModbusViewer
             try {
                 mbser.Serialize(mbProfile);
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Deserialize");
+                MessageBox.Show(ex.Message, "SerializeModbusViews");
             }
-
         }
 
         public void EnableDesignMode(PropertyGrid properties)
