@@ -17,6 +17,7 @@ namespace csModbusViewer
     {
         private List<ModbusView> ModbusViewList;
         private csControlDesigner controldesigner;
+        public event csControlDesigner.ExitDesignModeDelegate ExitDesignModeEvent;
 
         public MbViewPanel()
         {
@@ -27,6 +28,9 @@ namespace csModbusViewer
         {
             if (controldesigner != null) {
                 controldesigner.DeselecControl();
+                if (e.Button == MouseButtons.Right) {
+                    controldesigner.ShowContextMenu(this, e);
+                }
             }
         }
 
@@ -42,29 +46,36 @@ namespace csModbusViewer
             }
             if (mbProfile != null) {
                 this.Size = mbProfile.ViewSize;
-                // TODO Size cannoz be set here must be don in Splitpanel
+                // TODO Size cannoz be set here must be done in Splitpanel
                 this.Controls.Clear();
                 foreach (MasterGridView mbView in mbProfile.ModbusViewList) {
                     this.Controls.Add(mbView);
                 }
+                this.ModbusViewList = mbProfile.ModbusViewList;
+                return mbProfile.ModbusViewList;
             }
-            return mbProfile.ModbusViewList;
+            return null;
         }
 
-        public void SerializeModbusViews(string jsonPath)
+        public bool SerializeModbusViews(string jsonPath)
         {
-            MbViewProfile mbProfile = new MbViewProfile() {
-                DeviceType = DeviceType.MASTER.ToString(),
-                ViewSize = this.Size, 
-                ModbusViewList = ModbusViewList
-            };
+            if (ModbusViewList == null)
+                return false;
 
-            MbViewJson mbser = new MbViewJson(jsonPath);
             try {
+                MbViewProfile mbProfile = new MbViewProfile() {
+                    DeviceType = DeviceType.MASTER.ToString(),
+                    ViewSize = this.Size,
+                    ModbusViewList = ModbusViewList
+                };
+
+                MbViewJson mbser = new MbViewJson(jsonPath);
                 mbser.Serialize(mbProfile);
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "SerializeModbusViews");
+                return false;
             }
+            return true;
         }
 
         public void EnableDesignMode(PropertyGrid properties)
@@ -74,7 +85,22 @@ namespace csModbusViewer
                 mbView.setDesignMode(true);
                 controldesigner.AddControl(mbView);
             }
+            controldesigner.ExitDesignModeEvent += Controldesigner_ExitDesignModeEvent;
+            controldesigner.DeleteMbViewEvent += Controldesigner_DeleteMbViewEvent;
         }
+
+        private void Controldesigner_DeleteMbViewEvent(csControlCover csCover)
+        {
+            ModbusView mbView = (ModbusView)csCover.assignedControl;
+            ModbusViewList.Remove(mbView);
+            mbView.Dispose();
+        }
+
+        private void Controldesigner_ExitDesignModeEvent()
+        {
+            ExitDesignModeEvent?.Invoke();
+        }
+
         public void CloseDesignMode()
         {
             controldesigner.CloseDesigner();

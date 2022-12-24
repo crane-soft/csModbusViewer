@@ -34,6 +34,7 @@
             this.MenuStrip1 = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,6 +83,7 @@
             // 
             this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
+            this.newToolStripMenuItem,
             this.toolStripSeparator1,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
@@ -96,6 +98,12 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.openToolStripMenuItem.Text = "Open";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.newToolStripMenuItem.Text = "New";
             // 
             // toolStripSeparator1
             // 
@@ -339,6 +347,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel lbDeviceType;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSpace;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
     }
 }
 

@@ -1,50 +1,40 @@
-[
-  {
-    "$type": "csModbusView.MasterHoldingRegsGridView, csModbusView",
-    "Title": "Holding Regs 2",
-    "BaseAddr": 20,
-    "NumItems": 5,
-    "ItemColumns": 1,
-    "ItemNames": [
-      "Voltage",
-      "Current",
-      "Temper"
-    ],
-    "Location": "3, 171",
-    "Name": "HoldingRegs2",
-    "Size": "140, 108"
-  },
-  {
-    "$type": "csModbusView.MasterHoldingRegsGridView, csModbusView",
-    "Title": "Holding Regs 1",
-    "BaseAddr": 10,
-    "NumItems": 8,
-    "ItemColumns": 1,
-    "ItemNames": null,
-    "Location": "3, 3",
-    "Name": "HoldingRegs1",
-    "Size": "140, 162"
-  },
-  {
-    "$type": "csModbusView.MasterCoilsGridView, csModbusView",
-    "Title": "Coils",
-    "BaseAddr": 10,
-    "NumItems": 20,
-    "ItemColumns": 8,
-    "ItemNames": null,
-    "Location": "148, 3",
-    "Name": "",
-    "Size": "223, 72"
-  },
-  {
-    "$type": "csModbusView.MasterDiscretInputsGridView, csModbusView",
-    "Title": "DiscretInputs",
-    "BaseAddr": 20,
-    "NumItems": 20,
-    "ItemColumns": 8,
-    "ItemNames": null,
-    "Location": "148, 75",
-    "Name": "",
-    "Size": "223, 72"
-  }
-]
+{
+  "DeviceType": "MASTER",
+  "ViewSize": "554, 356",
+  "ModbusViewList": [
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "Holding Regs 2",
+      "BaseAddr": 20,
+      "NumItems": 5,
+      "Location": "4, 169",
+      "Size": "124, 139"
+    },
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "Holding Regs 1",
+      "BaseAddr": 10,
+      "NumItems": 8,
+      "Location": "3, 3",
+      "Size": "124, 162"
+    },
+    {
+      "$type": "csModbusView.CoilsGridView, csModbusView",
+      "Title": "Coils",
+      "BaseAddr": 10,
+      "NumItems": 20,
+      "ItemColumns": 8,
+      "Location": "144, 0",
+      "Size": "223, 72"
+    },
+    {
+      "$type": "csModbusView.DiscretInputsGridView, csModbusView",
+      "Title": "DiscretInputs",
+      "BaseAddr": 20,
+      "NumItems": 20,
+      "ItemColumns": 8,
+      "Location": "144, 72",
+      "Size": "223, 72"
+    }
+  ]
+}

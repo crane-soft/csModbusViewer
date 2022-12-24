@@ -65,6 +65,7 @@ namespace csFormsDesign
             MouseStart = e.Location;
             MousIsDown = true;
         }
+
         private void Control_MouseUp(object sender, MouseEventArgs e)
         {
             MousIsDown = false;

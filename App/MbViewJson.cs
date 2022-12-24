@@ -31,15 +31,12 @@ namespace csModbusViewer
 
         public class ModbusViewContractResolver : DefaultContractResolver
         {
-            private string[] otherPropertyList = {
+            private string[] generalProperties = {
                 "DeviceType","ViewSize","ModbusViewList" };
-
-            private string[] mbViewPropertyList = {
-                "Name","Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames", "Location", "Size" };
 
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
             {
-                if (Array.IndexOf(mbViewPropertyList, member.Name) >= 0) {
+                if (Array.IndexOf(csFormsDesign.mbViewProperties.PropertyList, member.Name) >= 0) {
                     var property = base.CreateProperty(member, memberSerialization);
                     if (property.PropertyName == "Name") {
                         property.ShouldSerialize =
@@ -52,7 +49,7 @@ namespace csModbusViewer
                 }
 
 
-                if (Array.IndexOf(otherPropertyList, member.Name) >= 0) {
+                if (Array.IndexOf(generalProperties, member.Name) >= 0) {
                     var property = base.CreateProperty(member, memberSerialization);
                     return property;
                 }
