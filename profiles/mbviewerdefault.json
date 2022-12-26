@@ -8,7 +8,7 @@
       "BaseAddr": 20,
       "NumItems": 5,
       "Location": "4, 169",
-      "Size": "124, 139"
+      "Size": "124, 110"
     },
     {
       "$type": "csModbusView.HoldingRegsGridView, csModbusView",
@@ -35,6 +35,14 @@
       "ItemColumns": 8,
       "Location": "144, 72",
       "Size": "223, 72"
+    },
+    {
+      "$type": "csModbusView.CoilsGridView, csModbusView",
+      "Title": "Coils",
+      "NumItems": 8,
+      "ItemColumns": 8,
+      "Location": "147, 159",
+      "Size": "186, 36"
     }
   ]
 }

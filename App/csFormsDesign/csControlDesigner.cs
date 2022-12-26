@@ -20,15 +20,17 @@ namespace csFormsDesign
         private PropertyGrid properties;
 
         private ContextMenu DesignContextMenu;
-        private MenuItem NewMbViewMenu;
-        private MenuItem DeleteMbViewMenu;
-        private MenuItem ExitDesignModeMenu;
+        private MenuItem NewControlMenu;
+        private MenuItem DeleteControlMenu;
+        private MenuItem ExitDesignMenu;
+        private MouseEventArgs ContextMenuArgs;
 
-        public delegate void ExitDesignModeDelegate();
-        public event ExitDesignModeDelegate ExitDesignModeEvent;
+        public delegate void ExitDesignDelegate();
+        public event  ExitDesignDelegate ExitDesignModeEvent;
 
-        public delegate void ControlCoverDelegate(csControlCover csCover);
-        public event ControlCoverDelegate DeleteMbViewEvent;
+        //public delegate void DesignEventHandler (Control ClickedControl, MouseEventArgs e);
+        public event MouseEventHandler DeleteControlEvent;
+        public event MouseEventHandler NewControlEvent;
 
         public csControlDesigner(PropertyGrid properties)
         {
@@ -41,46 +43,75 @@ namespace csFormsDesign
             sizeHandleList.Add(new cTopRightSizehandle());
             sizeHandleList.Add(new cBottomLeftSizehandle());
             sizeHandleList.Add(new cBottomRightSizehandle());
-            CreateDesignContextMenu();
             AllSizeHandleVisible = false;
 
         }
 
-        private void CreateDesignContextMenu()
+        public void CreateContextMenu(string[] NewItemList)
         {
             DesignContextMenu = new ContextMenu();
 
-            NewMbViewMenu = new MenuItem("New");
-            DeleteMbViewMenu = new MenuItem("Delete");
-            ExitDesignModeMenu = new MenuItem("Exit design mode");
+            NewControlMenu = new MenuItem("New");
+            for (int i = 0; i < NewItemList.Length; ++i) {
+                NewControlMenu.MenuItems.Add(NewItemList[i]);
+                NewControlMenu.MenuItems[i].Click += NewControlMenu_Click;
+            }
 
-            NewMbViewMenu.Click += NewMbViewMenu_Click;
-            DeleteMbViewMenu.Click += DeleteMbViewMenu_Click;
-            ExitDesignModeMenu.Click += ExitDesignModeMenu_Click;
+            DeleteControlMenu = new MenuItem("Delete");
+            ExitDesignMenu = new MenuItem("Exit design mode");
+
+
+            DeleteControlMenu.Click += DeleteControlMenu_Click;
+            ExitDesignMenu.Click += ExitDesignMenu_Click;
         }
-        private void NewMbViewMenu_Click(object sender, EventArgs e)
+
+        public void ShowContextMenu(object sender, MouseEventArgs e)
         {
+            ContextMenuArgs = e;
+            DesignContextMenu.MenuItems.Clear();
+            DesignContextMenu.MenuItems.Add(NewControlMenu);
+
+            if (sender.GetType() == typeof(csControlCover)) {
+                DesignContextMenu.MenuItems.Add(DeleteControlMenu);
+            }
+            DesignContextMenu.MenuItems.Add("-");
+            DesignContextMenu.MenuItems.Add(ExitDesignMenu);
+            DesignContextMenu.Show((Control)sender, e.Location);
         }
 
-        private void DeleteMbViewMenu_Click(object sender, EventArgs e)
+        private void NewControlMenu_Click(object sender, EventArgs e)
+        {
+            DeselecControl();
+            NewControlEvent?.Invoke(sender, ContextMenuArgs);
+        }
+
+        private void DeleteControlMenu_Click(object sender, EventArgs e)
         {
             if (selectedCover != null) {
-                ControlCoverList.Remove(selectedCover);
-                DeleteMbViewEvent?.Invoke(selectedCover);
+                csControlCover delCover = selectedCover;
+                Control assignedControl = delCover.assignedControl;
                 DeselecControl();
+                DeleteControlEvent?.Invoke(delCover.assignedControl, ContextMenuArgs);
+
+                ControlCoverList.Remove(delCover);
+                delCover.Dispose();
+                delCover = null;
             }
         }
 
-        private void ExitDesignModeMenu_Click(object sender, EventArgs e)
+        private void ExitDesignMenu_Click(object sender, EventArgs e)
         {
             ExitDesignModeEvent?.Invoke();
         }
 
-        public void AddControl(Control control)
+        public void AddControl(Control control, bool doSelct = false)
         {
             csControlCover controlCover = new csControlCover(this, control);
+            controlCover.Tag = ControlCoverList.Count + 1;
             ControlCoverList.Add(controlCover);
             controlCover.MouseDown += ControlCover_MouseDown;
+            if (doSelct)
+                AssignCover(controlCover);
         }
 
         public void CloseDesigner()
@@ -89,32 +120,20 @@ namespace csFormsDesign
                 selectedCover.Release();
             }
             foreach (csControlCover cover in ControlCoverList) {
-                cover.Visible = false;
-                cover.MouseDown -= ControlCover_MouseDown;
+                cover.Parent = null;
+                cover.Dispose();
             }
-        }
-
-        public void ShowContextMenu(object sender, MouseEventArgs e)
-        {
-            DesignContextMenu.MenuItems.Clear();
-            DesignContextMenu.MenuItems.Add(NewMbViewMenu);
-            if (sender.GetType() == typeof(csControlCover)) {
-                DesignContextMenu.MenuItems.Add(DeleteMbViewMenu);
+            foreach (cSizeHandle sizeHandle in sizeHandleList) {
+                sizeHandle.Parent = null;
+                sizeHandle.Dispose();
             }
-            DesignContextMenu.MenuItems.Add("-");
-            DesignContextMenu.MenuItems.Add(ExitDesignModeMenu);
-            DesignContextMenu.Show((Control)sender, e.Location);
         }
 
         private void ControlCover_MouseDown(object sender, MouseEventArgs e)
         {
             csControlCover clickedCover = (csControlCover)sender;
-            if (clickedCover != selectedCover) {
-                DeselecControl();
-                AssignCover(clickedCover);
-                //properties.SelectedObject =  clickedCover.assignedControl;  // nur wenn alle Properties angezeigt werden sollem
-                properties.SelectedObject = new mbViewProperties(clickedCover.assignedControl); // meine Auswahl
-            }
+            AssignCover(clickedCover);
+
             if (e.Button == MouseButtons.Right) {
                 ShowContextMenu(selectedCover,e);
             }
@@ -131,6 +150,9 @@ namespace csFormsDesign
 
         public void AssignCover(csControlCover cover)
         {
+            if (cover == selectedCover)
+                return;
+            DeselecControl();
             selectedCover = cover;
             selectedCover.CoversSelect();
             foreach (cSizeHandle sizeHandle in sizeHandleList) {
@@ -138,6 +160,8 @@ namespace csFormsDesign
                 sizeHandle.AssignControl(selectedCover);
             }
             AllSizeHandleVisible = true;
+            //properties.SelectedObject =  clickedCover.assignedControl;  // nur wenn alle Properties angezeigt werden sollem
+            properties.SelectedObject = new mbViewProperties(cover.assignedControl); // meine Auswahl
         }
 
         public bool AllSizeHandleVisible {

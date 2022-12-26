@@ -9,10 +9,10 @@ using System.Drawing;
 namespace csFormsDesign
 {
     /// <summary>
-    /// Each Control which should be designed needs a DesignCover for selecton and maanage mous events
+    /// Each Control which should be designed needs a DesignCover for selecton and manage mouse events
     /// </summary>
 
-    class csControlCover : Panel
+    class csControlCover : AirControl
     {
         private csControlDesigner controlDesigner;
         private Point MouseStart = new Point();
@@ -26,7 +26,6 @@ namespace csFormsDesign
             this.Parent = control.Parent;
             this.Bounds = new Rectangle(control.Left, control.Top, control.Width, control.Height);
             this.BringToFront();
-            this.BorderStyle = BorderStyle.None;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -113,22 +112,6 @@ namespace csFormsDesign
             assignedControl.Refresh();
             this.Refresh();
             controlDesigner.ReDrawAllSizeHandles();
-        }
-
-        // make it transparent
-        // https://stackoverflow.com/questions/40049506/in-c-sharp-winforms-is-there-a-way-to-put-dotted-border-around-all-controls-and
-
-        const int WS_EX_TRANSPARENT = 0x20;
-
-        protected override CreateParams CreateParams {
-            get {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle = cp.ExStyle | WS_EX_TRANSPARENT;
-                return cp;
-            }
-        }
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
         }
     }
 }

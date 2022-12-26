@@ -31,6 +31,15 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmcsModbusViewer));
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Holding Register");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Input Register");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Coils");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Discrete Inputs");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Modbus Views  -", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4});
             this.MenuStrip1 = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,13 +66,21 @@
             this.toolStripLabelSpace = new System.Windows.Forms.ToolStripLabel();
             this.lbDeviceType = new System.Windows.Forms.ToolStripLabel();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.DesignerSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.MbViewTree = new System.Windows.Forms.TreeView();
+            this.MbViewPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.ViewPanel = new csModbusViewer.MbViewPanel();
             this.MenuStrip1.SuspendLayout();
             this.StatusStrip1.SuspendLayout();
             this.mainToolBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
+            this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DesignerSplitContainer)).BeginInit();
+            this.DesignerSplitContainer.Panel1.SuspendLayout();
+            this.DesignerSplitContainer.Panel2.SuspendLayout();
+            this.DesignerSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuStrip1
@@ -75,7 +92,7 @@
             this.MenuStrip1.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip1.Name = "MenuStrip1";
             this.MenuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.MenuStrip1.Size = new System.Drawing.Size(554, 24);
+            this.MenuStrip1.Size = new System.Drawing.Size(594, 24);
             this.MenuStrip1.TabIndex = 0;
             this.MenuStrip1.Text = "MenuStrip1";
             // 
@@ -165,10 +182,10 @@
             this.LbLastModbusException,
             this.springLabel,
             this.StatusLabelCount});
-            this.StatusStrip1.Location = new System.Drawing.Point(0, 419);
+            this.StatusStrip1.Location = new System.Drawing.Point(0, 429);
             this.StatusStrip1.Name = "StatusStrip1";
             this.StatusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.StatusStrip1.Size = new System.Drawing.Size(554, 22);
+            this.StatusStrip1.Size = new System.Drawing.Size(594, 22);
             this.StatusStrip1.TabIndex = 6;
             this.StatusStrip1.Text = "StatusStrip1";
             // 
@@ -201,7 +218,7 @@
             // springLabel
             // 
             this.springLabel.Name = "springLabel";
-            this.springLabel.Size = new System.Drawing.Size(323, 17);
+            this.springLabel.Size = new System.Drawing.Size(363, 17);
             this.springLabel.Spring = true;
             // 
             // StatusLabelCount
@@ -222,7 +239,7 @@
             this.lbDeviceType});
             this.mainToolBar.Location = new System.Drawing.Point(0, 24);
             this.mainToolBar.Name = "mainToolBar";
-            this.mainToolBar.Size = new System.Drawing.Size(554, 39);
+            this.mainToolBar.Size = new System.Drawing.Size(594, 39);
             this.mainToolBar.TabIndex = 12;
             this.mainToolBar.Text = "toolStrip1";
             // 
@@ -279,9 +296,64 @@
             // mainSplitContainer.Panel1
             // 
             this.mainSplitContainer.Panel1.Controls.Add(this.ViewPanel);
-            this.mainSplitContainer.Size = new System.Drawing.Size(554, 356);
-            this.mainSplitContainer.SplitterDistance = 409;
+            // 
+            // mainSplitContainer.Panel2
+            // 
+            this.mainSplitContainer.Panel2.Controls.Add(this.DesignerSplitContainer);
+            this.mainSplitContainer.Panel2MinSize = 200;
+            this.mainSplitContainer.Size = new System.Drawing.Size(594, 366);
+            this.mainSplitContainer.SplitterDistance = 375;
             this.mainSplitContainer.TabIndex = 13;
+            // 
+            // DesignerSplitContainer
+            // 
+            this.DesignerSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DesignerSplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.DesignerSplitContainer.Name = "DesignerSplitContainer";
+            this.DesignerSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // DesignerSplitContainer.Panel1
+            // 
+            this.DesignerSplitContainer.Panel1.Controls.Add(this.MbViewTree);
+            this.DesignerSplitContainer.Panel1MinSize = 100;
+            // 
+            // DesignerSplitContainer.Panel2
+            // 
+            this.DesignerSplitContainer.Panel2.Controls.Add(this.MbViewPropertyGrid);
+            this.DesignerSplitContainer.Panel2MinSize = 100;
+            this.DesignerSplitContainer.Size = new System.Drawing.Size(215, 366);
+            this.DesignerSplitContainer.SplitterDistance = 118;
+            this.DesignerSplitContainer.TabIndex = 0;
+            // 
+            // MbViewTree
+            // 
+            this.MbViewTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MbViewTree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MbViewTree.Location = new System.Drawing.Point(0, 0);
+            this.MbViewTree.Name = "MbViewTree";
+            treeNode1.Name = "ndHoldingRegs";
+            treeNode1.Text = "Holding Register";
+            treeNode2.Name = "ndInputRegs";
+            treeNode2.Text = "Input Register";
+            treeNode3.Name = "ndCoils";
+            treeNode3.Text = "Coils";
+            treeNode4.Name = "ndDiscreteInputs";
+            treeNode4.Text = "Discrete Inputs";
+            treeNode5.Name = "MbViewList";
+            treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode5.Text = "Modbus Views  -";
+            this.MbViewTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode5});
+            this.MbViewTree.Size = new System.Drawing.Size(215, 118);
+            this.MbViewTree.TabIndex = 1;
+            // 
+            // MbViewPropertyGrid
+            // 
+            this.MbViewPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MbViewPropertyGrid.Location = new System.Drawing.Point(0, 0);
+            this.MbViewPropertyGrid.Name = "MbViewPropertyGrid";
+            this.MbViewPropertyGrid.Size = new System.Drawing.Size(215, 244);
+            this.MbViewPropertyGrid.TabIndex = 2;
             // 
             // ViewPanel
             // 
@@ -289,14 +361,14 @@
             this.ViewPanel.Location = new System.Drawing.Point(0, 0);
             this.ViewPanel.Margin = new System.Windows.Forms.Padding(4);
             this.ViewPanel.Name = "ViewPanel";
-            this.ViewPanel.Size = new System.Drawing.Size(409, 356);
+            this.ViewPanel.Size = new System.Drawing.Size(375, 366);
             this.ViewPanel.TabIndex = 11;
             // 
             // frmcsModbusViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(554, 441);
+            this.ClientSize = new System.Drawing.Size(594, 451);
             this.Controls.Add(this.mainSplitContainer);
             this.Controls.Add(this.mainToolBar);
             this.Controls.Add(this.StatusStrip1);
@@ -313,8 +385,13 @@
             this.mainToolBar.ResumeLayout(false);
             this.mainToolBar.PerformLayout();
             this.mainSplitContainer.Panel1.ResumeLayout(false);
+            this.mainSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
             this.mainSplitContainer.ResumeLayout(false);
+            this.DesignerSplitContainer.Panel1.ResumeLayout(false);
+            this.DesignerSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DesignerSplitContainer)).EndInit();
+            this.DesignerSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,6 +425,9 @@
         private System.Windows.Forms.ToolStripLabel lbDeviceType;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSpace;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.TreeView MbViewTree;
+        private System.Windows.Forms.PropertyGrid MbViewPropertyGrid;
+        private System.Windows.Forms.SplitContainer DesignerSplitContainer;
     }
 }
 

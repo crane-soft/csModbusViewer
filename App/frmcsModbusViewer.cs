@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using csModbusViewer.Properties;
 using csModbusLib;
 using csModbusView;
+
 namespace csModbusViewer
 {
     public partial class frmcsModbusViewer : Form
@@ -46,11 +47,11 @@ namespace csModbusViewer
             this.ToolButtonStop.Click += cmStop_Click;
             this.ToolButtonConnection.Click += ConnectionSettings;
 
+            ViewPanel.SetMbControlSelect( MbViewTree);
             ViewPanel.ExitDesignModeEvent += ViewPanel_ExitDesignModeEvent;
             StatusErrorCount.Text = "";
             ToolButtonStop.Enabled = false;
         }
-
 
         private void csModsMaster_Load(object sender, EventArgs e)
         {
@@ -149,7 +150,6 @@ namespace csModbusViewer
             }
         }
 
-
         private void ViewPanel_ExitDesignModeEvent()
         {
             designerToolStripMenuItem.Checked = false;
@@ -161,23 +161,18 @@ namespace csModbusViewer
                 if (Running)
                     ModbusClose();
                 lbLastError.Text = "Design Mode";
-
-                PropertyGrid properties = new PropertyGrid();
                 mainSplitContainer.Panel2Collapsed = false;
-                mainSplitContainer.Panel2.Controls.Add(properties);
-                properties.Dock = DockStyle.Fill;
-                ViewPanel.EnableDesignMode(properties);
-
+                ViewPanel.EnableDesignMode(MbViewPropertyGrid);
                 openToolStripMenuItem.Enabled = false;
                 newToolStripMenuItem.Enabled = false;
             } else {
                 ViewPanel.CloseDesignMode();
-                mainSplitContainer.Panel2.Controls.Clear();
                 mainSplitContainer.Panel2Collapsed = true;
                 lbLastError.Text = "";
                 openToolStripMenuItem.Enabled = true;
                 newToolStripMenuItem.Enabled = true;
             }
+            Cursor = Cursors.Default;
         }
 
         private void cmStart_Click(object sender, EventArgs e)
