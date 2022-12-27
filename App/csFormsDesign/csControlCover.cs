@@ -24,7 +24,7 @@ namespace csFormsDesign
             controlDesigner = designer;
             assignedControl = control;
             this.Parent = control.Parent;
-            this.Bounds = new Rectangle(control.Left, control.Top, control.Width, control.Height);
+            this.Bounds = assignedControl.Bounds;
             this.BringToFront();
         }
 
@@ -100,6 +100,7 @@ namespace csFormsDesign
                 return Maximum;
             return value;
         }
+
         public void UpdateBounds(Rectangle newBounds)
         {
             this.Bounds = newBounds;
@@ -107,6 +108,11 @@ namespace csFormsDesign
             ReDrawAll();
         }
 
+        public void UpdateBoundsFromControl()
+        {
+            UpdateBounds(assignedControl.Bounds);
+        }
+    
         private void ReDrawAll()
         {
             assignedControl.Refresh();

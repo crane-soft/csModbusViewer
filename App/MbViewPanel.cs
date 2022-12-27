@@ -57,13 +57,13 @@ namespace csModbusViewer
             Cursor = Cursors.Default;
             MbControlSelect.Cursor = Cursors.Default;
             MbControlSelect.SelectedNode = null;
-
             ViewAddTip.Hide(this);
             CtrlPlacer.Parent = null;
-            if (ViewAddNode != null) {
+
+            if ((e.Button == MouseButtons.Left) && (ViewAddNode != null)) {
                 New_MbViewControl(ViewAddNode.Index, e.Location);
-                ViewAddNode = null;
             }
+            ViewAddNode = null;
         }
 
         private void CtrlPlacer_MouseMove(object sender, MouseEventArgs e)
@@ -136,7 +136,7 @@ namespace csModbusViewer
         {
             MbControlSelect.ExpandAll();
             MbControlSelect.SelectedNode = null;
-
+            properties.PropertyValueChanged += Properties_PropertyValueChanged;
             string[] NewItemList = {"Holding Register","Input Registser","Coils","Discret Inputs"};
             controldesigner = new csControlDesigner(properties);
             controldesigner.CreateContextMenu(NewItemList);
@@ -148,6 +148,14 @@ namespace csModbusViewer
             controldesigner.DeleteControlEvent += Controldesigner_DeleteControlEvent;
             controldesigner.NewControlEvent += Controldesigner_NewControlEvent;
 
+        }
+
+        private void Properties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            ModbusView SelectedControl = (ModbusView)controldesigner.SelectedControl;
+            if (SelectedControl != null) {
+                SelectedControl.AdjustSize();
+            }
         }
 
         private void Controldesigner_NewControlEvent(object sender, MouseEventArgs e)

@@ -44,7 +44,22 @@ namespace csFormsDesign
             sizeHandleList.Add(new cBottomLeftSizehandle());
             sizeHandleList.Add(new cBottomRightSizehandle());
             AllSizeHandleVisible = false;
+            properties.PropertyValueChanged += Properties_PropertyValueChanged;
+        }
 
+        private void Properties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            selectedCover.UpdateBoundsFromControl();
+            AdjustHandles();
+        }
+
+        public Control SelectedControl {
+            get {
+                if (selectedCover != null) {
+                    return selectedCover.assignedControl;
+                }
+                return null;
+            }
         }
 
         public void CreateContextMenu(string[] NewItemList)
@@ -110,8 +125,15 @@ namespace csFormsDesign
             controlCover.Tag = ControlCoverList.Count + 1;
             ControlCoverList.Add(controlCover);
             controlCover.MouseDown += ControlCover_MouseDown;
+            controlCover.Resize += ControlCover_BoundsChanged;
+            controlCover.Move += ControlCover_BoundsChanged;
             if (doSelct)
                 AssignCover(controlCover);
+        }
+
+        private void ControlCover_BoundsChanged(object sender, EventArgs e)
+        {
+            properties.Refresh();
         }
 
         public void CloseDesigner()
@@ -138,7 +160,7 @@ namespace csFormsDesign
                 ShowContextMenu(selectedCover,e);
             }
         }
-
+  
         public void DeselecControl()
         {
             if (selectedCover != null) {
@@ -155,13 +177,18 @@ namespace csFormsDesign
             DeselecControl();
             selectedCover = cover;
             selectedCover.CoversSelect();
+            AdjustHandles();
+            AllSizeHandleVisible = true;
+            //properties.SelectedObject =  clickedCover.assignedControl;  // nur wenn alle Properties angezeigt werden sollem
+            properties.SelectedObject = new mbViewProperties(cover.assignedControl); // meine Auswahl
+        }
+
+        private void AdjustHandles()
+        {
             foreach (cSizeHandle sizeHandle in sizeHandleList) {
                 sizeHandle.Parent = selectedCover.Parent;
                 sizeHandle.AssignControl(selectedCover);
             }
-            AllSizeHandleVisible = true;
-            //properties.SelectedObject =  clickedCover.assignedControl;  // nur wenn alle Properties angezeigt werden sollem
-            properties.SelectedObject = new mbViewProperties(cover.assignedControl); // meine Auswahl
         }
 
         public bool AllSizeHandleVisible {
@@ -176,7 +203,6 @@ namespace csFormsDesign
             foreach (cSizeHandle sizeHandle in sizeHandleList) {
                 sizeHandle.ReDraw();
             }
-
         }
     }
 }
