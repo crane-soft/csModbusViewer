@@ -44,6 +44,7 @@
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,7 +70,7 @@
             this.DesignerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.MbViewTree = new System.Windows.Forms.TreeView();
             this.MbViewPropertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.ViewPanel = new csModbusViewer.MbViewPanel();
+            this.MbViewPanel = new csModbusViewer.MbViewDesignPanel();
             this.MenuStrip1.SuspendLayout();
             this.StatusStrip1.SuspendLayout();
             this.mainToolBar.SuspendLayout();
@@ -101,6 +102,7 @@
             this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.newToolStripMenuItem,
+            this.closeToolStripMenuItem,
             this.toolStripSeparator1,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
@@ -121,6 +123,12 @@
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.newToolStripMenuItem.Text = "New";
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.closeToolStripMenuItem.Text = "Close";
             // 
             // toolStripSeparator1
             // 
@@ -295,7 +303,7 @@
             // 
             // mainSplitContainer.Panel1
             // 
-            this.mainSplitContainer.Panel1.Controls.Add(this.ViewPanel);
+            this.mainSplitContainer.Panel1.Controls.Add(this.MbViewPanel);
             // 
             // mainSplitContainer.Panel2
             // 
@@ -355,14 +363,13 @@
             this.MbViewPropertyGrid.Size = new System.Drawing.Size(215, 244);
             this.MbViewPropertyGrid.TabIndex = 2;
             // 
-            // ViewPanel
+            // MbViewPanel
             // 
-            this.ViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ViewPanel.Location = new System.Drawing.Point(0, 0);
-            this.ViewPanel.Margin = new System.Windows.Forms.Padding(4);
-            this.ViewPanel.Name = "ViewPanel";
-            this.ViewPanel.Size = new System.Drawing.Size(375, 366);
-            this.ViewPanel.TabIndex = 11;
+            this.MbViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MbViewPanel.Location = new System.Drawing.Point(0, 0);
+            this.MbViewPanel.Name = "MbViewPanel";
+            this.MbViewPanel.Size = new System.Drawing.Size(375, 366);
+            this.MbViewPanel.TabIndex = 0;
             // 
             // frmcsModbusViewer
             // 
@@ -408,7 +415,6 @@
         System.Windows.Forms.ToolStripStatusLabel lbLastError;
         System.Windows.Forms.ToolStripStatusLabel LbLastModbusException;
         private System.Windows.Forms.ToolStripMenuItem designerToolStripMenuItem;
-        private MbViewPanel ViewPanel;
         private System.Windows.Forms.ToolStripStatusLabel StatusErrorCount;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabelCount;
         private System.Windows.Forms.ToolStripStatusLabel springLabel;
@@ -428,6 +434,8 @@
         private System.Windows.Forms.TreeView MbViewTree;
         private System.Windows.Forms.PropertyGrid MbViewPropertyGrid;
         private System.Windows.Forms.SplitContainer DesignerSplitContainer;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private MbViewDesignPanel MbViewPanel;
     }
 }
 

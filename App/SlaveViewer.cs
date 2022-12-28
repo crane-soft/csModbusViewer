@@ -23,12 +23,11 @@ namespace csModbusViewer
             modSlave = new MbSlaveServer();
         }
 
-        public override void SetViewList(List<ModbusView> ViewList)
+        protected override void InitViewList()
         {
-            base.SetViewList(ViewList);
             MyDataServer = new StdDataServer();
 
-            foreach (SlaveGridView mbView in ModbusViewList) {
+            foreach (SlaveGridView mbView in _ModbusViewList) {
                 mbView.AddDataToServer(MyDataServer);
                 mbView.ValueChangedEvent += MBGridView_ValueChanged;
                 mbView.ValueReadEvent += MBGridView_ValueChanged;
@@ -51,7 +50,7 @@ namespace csModbusViewer
             return ListenStarted;
         }
 
-        public override void Close()
+        public override void CloseConnection()
         {
             modSlave.StopListen();
         }
@@ -64,12 +63,13 @@ namespace csModbusViewer
 
         protected override MbInterface TCPInterface(string hostName, int port)
         {
-            throw new NotImplementedException();
+            return new MbTCPSlave(port);
+
         }
 
         protected override MbInterface UDPInterface(string hostName, int port)
         {
-            throw new NotImplementedException();
+            return new MbUDPSlave(port);
         }
     }
 }

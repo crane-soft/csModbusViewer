@@ -13,9 +13,9 @@ using csFormsDesign;
 
 namespace csModbusViewer
 {
-    class MbViewPanel : Panel
+    class MbViewDesignPanel : Panel
     {
-        private List<ModbusView> ModbusViewList;
+        protected List<ModbusView> ModbusViewList;
         private csControlDesigner controldesigner;
         public event csControlDesigner.ExitDesignDelegate ExitDesignModeEvent;
 
@@ -24,7 +24,7 @@ namespace csModbusViewer
         private TreeNode ViewAddNode;
         private AirControl CtrlPlacer = new AirControl();
 
-        public MbViewPanel()
+        public MbViewDesignPanel()
         {
             this.MouseClick += MbViewPanel_MouseClick;
 
@@ -88,49 +88,15 @@ namespace csModbusViewer
             }
         }
 
-        public List<ModbusView> DeserializeModbusViews(string jsonPath)
+        public void InitModbusViewList(List<ModbusView> ModbusViewList)
         {
-            MbViewJson mbser = new MbViewJson(jsonPath);
-
-            MbViewProfile mbProfile = null;
-            try {
-                mbProfile = mbser.Deserialize();
-            } catch (Exception ex) {
-                MessageBox.Show(ex.Message, "DeserializeModbusViews");
+            this.Controls.Clear();
+            foreach (ModbusView mbView in ModbusViewList) {
+                this.Controls.Add(mbView);
             }
-            if (mbProfile != null) {
-                this.Size = mbProfile.ViewSize;
-                // TODO Size cannoz be set here must be done in Splitpanel
-                this.Controls.Clear();
-                foreach (MasterGridView mbView in mbProfile.ModbusViewList) {
-                    this.Controls.Add(mbView);
-                }
-                this.ModbusViewList = mbProfile.ModbusViewList;
-                return mbProfile.ModbusViewList;
-            }
-            return null;
+            this.ModbusViewList = ModbusViewList;
         }
 
-        public bool SerializeModbusViews(string jsonPath)
-        {
-            if (ModbusViewList == null)
-                return false;
-
-            try {
-                MbViewProfile mbProfile = new MbViewProfile() {
-                    DeviceType = DeviceType.MASTER.ToString(),
-                    ViewSize = this.Size,
-                    ModbusViewList = ModbusViewList
-                };
-
-                MbViewJson mbser = new MbViewJson(jsonPath);
-                mbser.Serialize(mbProfile);
-            } catch (Exception ex) {
-                MessageBox.Show(ex.Message, "SerializeModbusViews");
-                return false;
-            }
-            return true;
-        }
 
         public void EnableDesignMode(PropertyGrid properties)
         {

@@ -68,7 +68,13 @@ namespace csModbusViewer
             };
 
             string jsonStr = JsonConvert.SerializeObject(mbProfile, Formatting.Indented, settings);
-            jsonStr = jsonStr.Replace("csModbusView.Master", "csModbusView.");
+            if (mbProfile.DeviceType == csModbusLib.DeviceType.MASTER.ToString()) {
+                jsonStr = jsonStr.Replace("csModbusView.Master", "csModbusView.");
+            } else if (mbProfile.DeviceType == csModbusLib.DeviceType.SLAVE.ToString()) {
+                jsonStr = jsonStr.Replace("csModbusView.Slave", "csModbusView.");
+            } else {
+                throw new Exception("unknown Devicetype ");
+            }
             System.IO.File.WriteAllText(jsonFileName, jsonStr);
           }
 
@@ -76,15 +82,12 @@ namespace csModbusViewer
         {
             string jsonStr = System.IO.File.ReadAllText(jsonFileName);
 
-            csModbusLib.DeviceType DeviceType = csModbusLib.DeviceType.NO_TYPE;
             var jObject = JObject.Parse(jsonStr);
             var jToken = jObject.GetValue("DeviceType");
 
             if (jToken.Value<string>() == csModbusLib.DeviceType.MASTER.ToString()) {
-                DeviceType = csModbusLib.DeviceType.MASTER;
                 jsonStr = jsonStr.Replace("csModbusView.", "csModbusView.Master");
             } else if (jToken.Value<string>() == csModbusLib.DeviceType.SLAVE.ToString()) {
-                DeviceType = csModbusLib.DeviceType.SLAVE;
                 jsonStr = jsonStr.Replace("csModbusView.", "csModbusView.Slave");
             } else {
                 throw new Exception("unknown Devicetype ");

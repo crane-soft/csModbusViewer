@@ -80,7 +80,7 @@
     </Compile>
     <Compile Include="MasterViewer.cs" />
     <Compile Include="MbViewJson.cs" />
-    <Compile Include="MbViewPanel.cs">
+    <Compile Include="MbViewDesignPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -103,7 +103,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="MbViewPanel .cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

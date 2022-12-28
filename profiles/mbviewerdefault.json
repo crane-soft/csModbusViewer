@@ -1,14 +1,14 @@
 {
   "DeviceType": "MASTER",
-  "ViewSize": "554, 356",
+  "ViewSize": "736, 546",
   "ModbusViewList": [
     {
       "$type": "csModbusView.HoldingRegsGridView, csModbusView",
       "Title": "Holding Regs 2",
       "BaseAddr": 20,
       "NumItems": 5,
-      "Location": "4, 169",
-      "Size": "124, 110"
+      "Location": "3, 170",
+      "Size": "122, 110"
     },
     {
       "$type": "csModbusView.HoldingRegsGridView, csModbusView",
@@ -16,7 +16,7 @@
       "BaseAddr": 10,
       "NumItems": 8,
       "Location": "3, 3",
-      "Size": "124, 162"
+      "Size": "122, 164"
     },
     {
       "$type": "csModbusView.CoilsGridView, csModbusView",
@@ -24,8 +24,8 @@
       "BaseAddr": 10,
       "NumItems": 20,
       "ItemColumns": 8,
-      "Location": "144, 0",
-      "Size": "223, 72"
+      "Location": "135, 3",
+      "Size": "223, 73"
     },
     {
       "$type": "csModbusView.DiscretInputsGridView, csModbusView",
@@ -33,16 +33,8 @@
       "BaseAddr": 20,
       "NumItems": 20,
       "ItemColumns": 8,
-      "Location": "144, 72",
-      "Size": "223, 72"
-    },
-    {
-      "$type": "csModbusView.CoilsGridView, csModbusView",
-      "Title": "Coils",
-      "NumItems": 8,
-      "ItemColumns": 8,
-      "Location": "147, 159",
-      "Size": "186, 36"
+      "Location": "135, 82",
+      "Size": "223, 73"
     }
   ]
 }

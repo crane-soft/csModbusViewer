@@ -25,10 +25,9 @@ namespace csModbusViewer
 
         }
 
-        public override void SetViewList(List<ModbusView> ViewList)
+        protected override void InitViewList()
         {
-            base.SetViewList(ViewList);
-            foreach (MasterGridView mbView in ModbusViewList) {
+            foreach (MasterGridView mbView in _ModbusViewList) {
                 mbView.InitGridView(ModMaster);
             }
         }
@@ -47,7 +46,7 @@ namespace csModbusViewer
             return false;
         }
 
-        public override void Close()
+        public override void CloseConnection()
         {
             sysRefreshTimer.Enabled = false;
             ModMaster.Close();
@@ -66,13 +65,14 @@ namespace csModbusViewer
         {
             csModbusLib.ErrorCodes ErrCode;
 
-            foreach (MasterGridView mbView in ModbusViewList) {
+            foreach (MasterGridView mbView in _ModbusViewList) {
                 ErrCode = mbView.Update_ModbusData();
                 if (ErrCode != ErrorCodes.NO_ERROR)
                     return ErrCode;
             }
             return ErrorCodes.NO_ERROR;
         }
+
         public override ExceptionCodes GetModusException()
         {
             return ModMaster.GetModusException();

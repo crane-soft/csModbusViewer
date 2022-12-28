@@ -10,12 +10,12 @@ using csModbusView;
 
 namespace csModbusViewer
 {
-    public abstract class ViewerBase
+    abstract class ViewerBase
     {
         protected bool Running = false;
-        protected List<ModbusView> ModbusViewList;
         protected csModbusLib.ConnectionType InterfaceType = ConnectionType.NO_CONNECTION;
         protected MbInterface modbusConnection;
+        protected List<ModbusView> _ModbusViewList;
 
         public delegate void DisplayErrorCode_Delegate(csModbusLib.ErrorCodes ErrCode);
         public event DisplayErrorCode_Delegate ErrorCodeEvent;
@@ -24,15 +24,29 @@ namespace csModbusViewer
         {
         }
 
-        public virtual void SetViewList(List<ModbusView> ViewList)
-        {
-            ModbusViewList = ViewList;
+        public List<ModbusView> ModbusViewList {
+            get {
+                return _ModbusViewList;
+            }
+            set {
+                _ModbusViewList = value;
+                InitViewList();
+            }
         }
 
+        protected abstract void InitViewList();
         public abstract bool IsConnected();
         public abstract bool Connect();
-        public abstract void Close();
+        public abstract void CloseConnection();
         public abstract ExceptionCodes GetModusException();
+
+        public void Close()
+        {
+            foreach (ModbusView mbView in _ModbusViewList) {
+                mbView.Dispose();
+            }
+            _ModbusViewList.Clear();
+        }
 
         protected void DisplayErrorCode(csModbusLib.ErrorCodes ErrCode)
         {

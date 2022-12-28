@@ -28,7 +28,6 @@ namespace csFormsDesign
         public delegate void ExitDesignDelegate();
         public event  ExitDesignDelegate ExitDesignModeEvent;
 
-        //public delegate void DesignEventHandler (Control ClickedControl, MouseEventArgs e);
         public event MouseEventHandler DeleteControlEvent;
         public event MouseEventHandler NewControlEvent;
 

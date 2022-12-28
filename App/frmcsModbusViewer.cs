@@ -16,18 +16,19 @@ namespace csModbusViewer
 {
     public partial class frmcsModbusViewer : Form
     {
-        private csModbusLib.DeviceType ViewerType = DeviceType.NO_TYPE;
-
-        private csModbusLib.ConnectionType InterfaceType = ConnectionType.NO_CONNECTION;
+        private DeviceType ViewerType = DeviceType.NO_TYPE;
+        private ConnectionType InterfaceType = ConnectionType.NO_CONNECTION;
 
         private int RefreshCount = 0;
         private int ErrorCount = 0;
         private bool Running = false;
-        private ViewerBase MbViewer;
-
+        private ViewerBase ModbusViewer;
+        private string FormTitle;
         public frmcsModbusViewer()
         {
             InitializeComponent();
+            FormTitle = this.Text;
+
             mainSplitContainer.Panel2Collapsed = true;
 
             this.saveToolStripMenuItem.Enabled = false;
@@ -38,7 +39,10 @@ namespace csModbusViewer
 
 
             this.SettingsToolStripMenuItem.Click += ConnectionSettings;
+
             this.openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
+            this.newToolStripMenuItem.Click += NewToolStripMenuItem_Click;
+            this.closeToolStripMenuItem.Click += CloseToolStripMenuItem_Click;
             this.saveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
             this.saveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
             this.ExitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
@@ -47,44 +51,106 @@ namespace csModbusViewer
             this.ToolButtonStop.Click += cmStop_Click;
             this.ToolButtonConnection.Click += ConnectionSettings;
 
-            ViewPanel.SetMbControlSelect( MbViewTree);
-            ViewPanel.ExitDesignModeEvent += ViewPanel_ExitDesignModeEvent;
+            EnableCommands(false);
+
+            MbViewPanel.SetMbControlSelect(MbViewTree);
+            MbViewPanel.ExitDesignModeEvent += ViewPanel_ExitDesignModeEvent;
+
             StatusErrorCount.Text = "";
+            lbDeviceType.Text = "";
             ToolButtonStop.Enabled = false;
         }
 
+        private void EnableCommands(bool enable)
+        {
+            this.closeToolStripMenuItem.Enabled = enable;
+            this.designerToolStripMenuItem.Enabled = enable;
+            this.ToolButtonStart.Enabled = enable;
+        }
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ViewerIsOpen()) {
+                if (MessageBox.Show("Close Current Profile", "", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                    return;
+                CloseToolStripMenuItem_Click(null, EventArgs.Empty);
+            }
+            this.Text = "New - " + FormTitle;
+
+            List<ModbusView> ModbusViewList = new List<ModbusView>();
+            MasterHoldingRegsGridView TemplateView = new MasterHoldingRegsGridView(10, 8); ;
+            TemplateView.Location = new Point(60, 30);
+            ModbusViewList.Add(TemplateView);
+
+            CreateViewer(DeviceType.MASTER.ToString(), ModbusViewList);
+            // Start designer
+            designerToolStripMenuItem.Checked = true;
+        }
+
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ViewerIsOpen() == false)
+                return;
+            ModbusStop();
+            ModbusViewer.Close();
+            ModbusViewer = null;
+            lbDeviceType.Text = "";
+            Settings.Default.JsonPath = "";
+            Settings.Default.Save();
+            this.Text = FormTitle;
+            EnableCommands(false);
+
+        }
+  
         private void csModsMaster_Load(object sender, EventArgs e)
         {
-            ReadModbusProfile (Settings.Default.JsonPath);
+            string JsonPath = Settings.Default.JsonPath;
+            if (JsonPath.Length > 0)
+                LoadModbusProfile (JsonPath);
         }
 
-        private bool ReadModbusProfile(string JsonPath)
+        private bool LoadModbusProfile(string JsonPath)
         {
-            if (JsonPath.Length > 0) {
-                List<ModbusView> ModbusViewList;
-                ModbusViewList = this.ViewPanel.DeserializeModbusViews(JsonPath);
-                if (ModbusViewList != null) {
-                    MbViewer = new MasterViewer();
-                    MbViewer.ErrorCodeEvent += Invoke_DisplayErrorCode;
-                    MbViewer.SetViewList(ModbusViewList);
-                    InitConnection();
-
-                    this.Text = System.IO.Path.GetFileNameWithoutExtension(JsonPath) + " - " + this.Text;
-                    ViewerType = DeviceType.MASTER;
-                    if (ViewerType == DeviceType.MASTER) {
-                        lbDeviceType.Text = "Modbus Master";
-                    } else if (ViewerType == DeviceType.SLAVE) {
-                        lbDeviceType.Text = "Modbus Master";
-                    } else {
-                        lbDeviceType.Text = "Type unknown";
-                    }
-                    this.saveToolStripMenuItem.Enabled = true;
-                    this.saveAsToolStripMenuItem.Enabled = true;
-                    return true;
-                }
+            MbViewJson mbser = new MbViewJson(JsonPath);
+            MbViewProfile mbProfile = null;
+            try {
+                mbProfile = mbser.Deserialize();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, "DeserializeModbusViews");
+                return false;
             }
-            return false;
+            this.Text = System.IO.Path.GetFileNameWithoutExtension(JsonPath) + " - " + FormTitle;
+            this.Size = mbProfile.ViewSize;
+
+            CreateViewer(mbProfile.DeviceType, mbProfile.ModbusViewList);
+            return true;
         }
+
+        private void CreateViewer(string TypeName, List<ModbusView> ModbusViewList)
+        {
+            if (TypeName == DeviceType.MASTER.ToString()) {
+                ViewerType = DeviceType.MASTER;
+                lbDeviceType.Text = "Modbus Master";
+                ModbusViewer = new MasterViewer();
+            } else if (TypeName == DeviceType.SLAVE.ToString()) {
+                ViewerType = DeviceType.SLAVE;
+                lbDeviceType.Text = "Modbus Slave";
+                ModbusViewer = new SlaveViewer();
+            }
+            OpenModbusViewer(ModbusViewList);
+        }
+
+        private void OpenModbusViewer(List<ModbusView> ModbusViewList)
+        {
+            MbViewPanel.InitModbusViewList(ModbusViewList);
+            ModbusViewer.ModbusViewList = ModbusViewList;
+            ModbusViewer.ErrorCodeEvent += Invoke_DisplayErrorCode;
+            InitConnection();
+
+            this.saveToolStripMenuItem.Enabled = true;
+            this.saveAsToolStripMenuItem.Enabled = true;
+            EnableCommands(true);
+        }
+
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -102,7 +168,7 @@ namespace csModbusViewer
 
             if (ofDlg.ShowDialog() == DialogResult.OK) {
                 string JsonPath = ofDlg.FileName;
-                if (ReadModbusProfile(JsonPath) == true) {
+                if (LoadModbusProfile(JsonPath) == true) {
                     Settings.Default.JsonFolder = System.IO.Path.GetDirectoryName(JsonPath);
                     Settings.Default.JsonPath = JsonPath;
                     Settings.Default.Save();
@@ -112,26 +178,21 @@ namespace csModbusViewer
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MbViewer == null)
+            if (ViewerIsOpen() == false)
                 return;
-            if (designerToolStripMenuItem.Checked) {
-                designerToolStripMenuItem.Checked = false;
-            }
+
             string JsonPath = Settings.Default.JsonPath;
             if (JsonPath != null) {
                 if (JsonPath.Length > 0 ) {
-                    ViewPanel.SerializeModbusViews(JsonPath);
+                    SerializeModbusProfile(JsonPath);
                 }
             }
         }
 
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MbViewer == null)
+            if (ViewerIsOpen() == false)
                 return;
-            if (designerToolStripMenuItem.Checked) {
-                designerToolStripMenuItem.Checked = false;
-            }
 
             string jsonFolder = Settings.Default.JsonFolder;
             
@@ -146,8 +207,40 @@ namespace csModbusViewer
             }
             if (ofDlg.ShowDialog() == DialogResult.OK) {
                 string JsonPath = ofDlg.FileName;
-                ViewPanel.SerializeModbusViews(JsonPath);
+                SerializeModbusProfile(JsonPath);
             }
+        }
+
+        private bool SerializeModbusProfile(string jsonPath)
+        {
+            List<ModbusView> ModbusViewList = ModbusViewer.ModbusViewList;
+            if (ModbusViewList == null)
+                return false;
+
+            try {
+                MbViewProfile mbProfile = new MbViewProfile() {
+                    DeviceType =  ViewerType.ToString(),
+                    ViewSize = this.Size,
+                    ModbusViewList = ModbusViewList
+                };
+
+                MbViewJson mbser = new MbViewJson(jsonPath);
+                mbser.Serialize(mbProfile);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, "SerializeModbusViews");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ViewerIsOpen()
+        {
+            if (ModbusViewer == null)
+                return false;
+            if (designerToolStripMenuItem.Checked) {
+                designerToolStripMenuItem.Checked = false;
+            }
+            return true;
         }
 
         private void ViewPanel_ExitDesignModeEvent()
@@ -159,18 +252,22 @@ namespace csModbusViewer
         {
             if (designerToolStripMenuItem.Checked) {
                 if (Running)
-                    ModbusClose();
+                    ModbusStop();
                 lbLastError.Text = "Design Mode";
                 mainSplitContainer.Panel2Collapsed = false;
-                ViewPanel.EnableDesignMode(MbViewPropertyGrid);
+                MbViewPanel.EnableDesignMode(MbViewPropertyGrid);
                 openToolStripMenuItem.Enabled = false;
                 newToolStripMenuItem.Enabled = false;
+                ToolButtonStart.Enabled = false;
+
             } else {
-                ViewPanel.CloseDesignMode();
+                MbViewPanel.CloseDesignMode();
                 mainSplitContainer.Panel2Collapsed = true;
                 lbLastError.Text = "";
                 openToolStripMenuItem.Enabled = true;
                 newToolStripMenuItem.Enabled = true;
+                ToolButtonStart.Enabled = true;
+
             }
             Cursor = Cursors.Default;
         }
@@ -183,7 +280,11 @@ namespace csModbusViewer
                 {
                     SettingsToolStripMenuItem.Enabled = false;
                     Running = true;
-                    lbLastError.Text = "Connected";
+                    if (ViewerType == DeviceType.SLAVE) {
+                        lbLastError.Text = "Listening";
+                    } else {
+                        lbLastError.Text = "Connected";
+                    }
                     ToolButtonStart.Enabled = false;
                     ToolButtonStop.Enabled = true;
                     openToolStripMenuItem.Enabled = false;
@@ -195,36 +296,36 @@ namespace csModbusViewer
 
         private bool ModbusConnect()
         {
-            if (MbViewer.IsConnected())
+            if (ModbusViewer.IsConnected())
                 return true;
             lbLastError.Text = "Connecting..";
             this.Update();
-            return MbViewer.Connect();
+            return ModbusViewer.Connect();
         }
 
         private void cmStop_Click(object sender, EventArgs e)
         {
+            ModbusStop();
+        }
+
+        private void ModbusStop()
+        {
             // TODO Master should closed at the end of one polling cycle
             // therfor better make a close request here which is executet in the timer
             if (Running) {
-                ModbusClose();
+                ModbusViewer.CloseConnection();
+                Running = false;
+                StatusLabelCount.Text = "";
+                RefreshCount = 0;
+                SettingsToolStripMenuItem.Enabled = true;
+                ErrorCount = 0;
+                lbLastError.Text = "";
                 ToolButtonStart.Enabled = true;
                 ToolButtonStop.Enabled = false;
                 openToolStripMenuItem.Enabled = true;
             }
         }
 
-        private void ModbusClose()
-        {
-            MbViewer.Close();
-            Running = false;
-            StatusLabelCount.Text = "";
-            RefreshCount = 0;
-            SettingsToolStripMenuItem.Enabled = true;
-            ErrorCount = 0;
-            lbLastError.Text = "";
-         }
- 
         delegate void DisplayErrorCode_Callback(csModbusLib.ErrorCodes ErrCode);
 
         private void Invoke_DisplayErrorCode(csModbusLib.ErrorCodes ErrCode)
@@ -252,7 +353,7 @@ namespace csModbusViewer
                 lbLastError.Text = ErrCode.ToString();
                 if (ErrCode == ErrorCodes.MODBUS_EXCEPTION)
                 {
-                    ExceptionCodes ModbusException = MbViewer.GetModusException();
+                    ExceptionCodes ModbusException = ModbusViewer.GetModusException();
                     LbLastModbusException.Text = ModbusException.ToString();
                 }
                 else
@@ -261,7 +362,7 @@ namespace csModbusViewer
                 if (InterfaceType == ConnectionType.TCP_IP)
                 {
                     if ((ErrCode == csModbusLib.ErrorCodes.CONNECTION_ERROR) | (ErrCode == csModbusLib.ErrorCodes.CONNECTION_CLOSED))
-                        ModbusClose();
+                        ModbusStop();
                 }
             }
         }
@@ -275,8 +376,10 @@ namespace csModbusViewer
 
         private void InitConnection()
         {
+            if (ModbusViewer == null)
+                return;
             string ConnectionInfo;
-            if (MbViewer.InitConnection(out ConnectionInfo) != ConnectionType.NO_CONNECTION) {
+            if (ModbusViewer.InitConnection(out ConnectionInfo) != ConnectionType.NO_CONNECTION) {
                 lbConnectionOptions.Text = ConnectionInfo;
                 ToolButtonStart.Enabled = true;
             } else {
@@ -291,9 +394,9 @@ namespace csModbusViewer
 
         private void frmModsMaster_Closing(object sender, CancelEventArgs e)
         {
-            if (MbViewer != null) {
-                if (MbViewer.IsConnected())
-                    MbViewer.Close();
+            if (ModbusViewer != null) {
+                if (ModbusViewer.IsConnected())
+                    ModbusViewer.CloseConnection();
             }
         }
     }
