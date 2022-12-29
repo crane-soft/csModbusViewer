@@ -41,6 +41,11 @@ namespace csModbusViewer
 
         private void AddControlTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            if (e.Node.Level == 0) {
+                MbControlSelect.SelectedNode = null;
+                FinishPlacer();
+                return;
+            }
             MbControlSelect.SelectedNode = e.Node;
             MbControlSelect.Cursor = Cursors.Cross;
             Cursor = Cursors.Cross;
@@ -54,15 +59,19 @@ namespace csModbusViewer
 
         private void CtrlPlacer_MouseDown(object sender, MouseEventArgs e)
         {
+            if ((e.Button == MouseButtons.Left) && (ViewAddNode != null)) {
+                New_MbViewControl(ViewAddNode.Index, e.Location);
+            }
+            FinishPlacer();
+        }
+
+        private void FinishPlacer()
+        {
             Cursor = Cursors.Default;
             MbControlSelect.Cursor = Cursors.Default;
             MbControlSelect.SelectedNode = null;
             ViewAddTip.Hide(this);
             CtrlPlacer.Parent = null;
-
-            if ((e.Button == MouseButtons.Left) && (ViewAddNode != null)) {
-                New_MbViewControl(ViewAddNode.Index, e.Location);
-            }
             ViewAddNode = null;
         }
 
@@ -155,7 +164,6 @@ namespace csModbusViewer
             Controls.Add(NewModbusView);
             ModbusViewList.Add(NewModbusView);
             controldesigner.AddControl(NewModbusView, true);
-
         }
 
         private void Controldesigner_DeleteControlEvent(object sender, MouseEventArgs e)

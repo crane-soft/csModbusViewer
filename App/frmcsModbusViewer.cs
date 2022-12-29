@@ -77,14 +77,11 @@ namespace csModbusViewer
             }
             this.Text = "New - " + FormTitle;
 
-            List<ModbusView> ModbusViewList = new List<ModbusView>();
-            MasterHoldingRegsGridView TemplateView = new MasterHoldingRegsGridView(10, 8); ;
-            TemplateView.Location = new Point(60, 30);
-            ModbusViewList.Add(TemplateView);
-
-            CreateViewer(DeviceType.MASTER.ToString(), ModbusViewList);
-            // Start designer
-            designerToolStripMenuItem.Checked = true;
+            dlgNewProfile dlgNew = new dlgNewProfile();
+            if (dlgNew.ShowDialog() == DialogResult.Cancel)
+                return;
+            CreateViewer(dlgNew.ViewerType.ToString(), dlgNew.ModbusViewList);
+            designerToolStripMenuItem.Checked = true;   // Start designer
         }
 
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)

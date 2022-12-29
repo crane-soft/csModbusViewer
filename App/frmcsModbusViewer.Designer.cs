@@ -67,10 +67,10 @@
             this.toolStripLabelSpace = new System.Windows.Forms.ToolStripLabel();
             this.lbDeviceType = new System.Windows.Forms.ToolStripLabel();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.MbViewPanel = new csModbusViewer.MbViewDesignPanel();
             this.DesignerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.MbViewTree = new System.Windows.Forms.TreeView();
             this.MbViewPropertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.MbViewPanel = new csModbusViewer.MbViewDesignPanel();
             this.MenuStrip1.SuspendLayout();
             this.StatusStrip1.SuspendLayout();
             this.mainToolBar.SuspendLayout();
@@ -116,50 +116,50 @@
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.newToolStripMenuItem.Text = "New";
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.closeToolStripMenuItem.Text = "Close";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.saveAsToolStripMenuItem.Text = "Save as";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
             this.ExitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.ExitToolStripMenuItem.Text = "Exit";
             // 
             // OptionsToolStripMenuItem
@@ -176,7 +176,7 @@
             // 
             this.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
             this.SettingsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.SettingsToolStripMenuItem.Text = "Settings";
             // 
             // designerToolStripMenuItem
@@ -184,7 +184,7 @@
             this.designerToolStripMenuItem.CheckOnClick = true;
             this.designerToolStripMenuItem.Name = "designerToolStripMenuItem";
             this.designerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.designerToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.designerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.designerToolStripMenuItem.Text = "Design Mode";
             // 
             // StatusStrip1
@@ -320,6 +320,14 @@
             this.mainSplitContainer.SplitterDistance = 375;
             this.mainSplitContainer.TabIndex = 13;
             // 
+            // MbViewPanel
+            // 
+            this.MbViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MbViewPanel.Location = new System.Drawing.Point(0, 0);
+            this.MbViewPanel.Name = "MbViewPanel";
+            this.MbViewPanel.Size = new System.Drawing.Size(375, 366);
+            this.MbViewPanel.TabIndex = 0;
+            // 
             // DesignerSplitContainer
             // 
             this.DesignerSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -356,6 +364,7 @@
             treeNode4.Text = "Discrete Inputs";
             treeNode5.Name = "MbViewList";
             treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode5.SelectedImageIndex = -2;
             treeNode5.Text = "Modbus Views  -";
             this.MbViewTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode5});
@@ -369,14 +378,6 @@
             this.MbViewPropertyGrid.Name = "MbViewPropertyGrid";
             this.MbViewPropertyGrid.Size = new System.Drawing.Size(215, 244);
             this.MbViewPropertyGrid.TabIndex = 2;
-            // 
-            // MbViewPanel
-            // 
-            this.MbViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MbViewPanel.Location = new System.Drawing.Point(0, 0);
-            this.MbViewPanel.Name = "MbViewPanel";
-            this.MbViewPanel.Size = new System.Drawing.Size(375, 366);
-            this.MbViewPanel.TabIndex = 0;
             // 
             // frmcsModbusViewer
             // 

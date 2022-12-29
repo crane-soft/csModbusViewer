@@ -83,6 +83,12 @@
     <Compile Include="MbViewDesignPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="dlgNewProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgNewProfile.Designer.cs">
+      <DependentUpon>dlgNewProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SlaveViewer.cs" />
@@ -92,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmcsModbusViewer.resx">
       <DependentUpon>frmcsModbusViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgNewProfile.resx">
+      <DependentUpon>dlgNewProfile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

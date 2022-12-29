@@ -184,6 +184,7 @@ namespace csFormsDesign
 
         public void AssignCover(csControlCover cover)
         {
+            cover.Focus();
             if (cover == selectedCover)
                 return;
             DeselecControl();
