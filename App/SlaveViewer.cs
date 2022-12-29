@@ -46,6 +46,7 @@ namespace csModbusViewer
 
         public override bool Connect()
         {
+            MyDataServer.SlaveID = SlaveID;
             ListenStarted = modSlave.StartListen(modbusConnection, MyDataServer);
             return ListenStarted;
         }
@@ -63,12 +64,14 @@ namespace csModbusViewer
 
         protected override MbInterface TCPInterface(string hostName, int port)
         {
+            ConnectionInfo = string.Format("TCP:{0}", port);
             return new MbTCPSlave(port);
 
         }
 
         protected override MbInterface UDPInterface(string hostName, int port)
         {
+            ConnectionInfo = string.Format("UDP:{0}", port);
             return new MbUDPSlave(port);
         }
     }

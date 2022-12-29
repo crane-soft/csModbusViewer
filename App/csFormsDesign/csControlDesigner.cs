@@ -48,8 +48,10 @@ namespace csFormsDesign
 
         private void Properties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            selectedCover.UpdateBoundsFromControl();
-            AdjustHandles();
+            if (selectedCover != null) {
+                selectedCover.UpdateBoundsFromControl();
+                AdjustHandles();
+            }
         }
 
         public Control SelectedControl {
@@ -137,9 +139,7 @@ namespace csFormsDesign
 
         public void CloseDesigner()
         {
-           if (selectedCover != null) {
-                selectedCover.Release();
-            }
+            DeselecControl();
             foreach (csControlCover cover in ControlCoverList) {
                 cover.Parent = null;
                 cover.Dispose();

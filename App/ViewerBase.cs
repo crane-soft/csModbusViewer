@@ -15,8 +15,9 @@ namespace csModbusViewer
         protected bool Running = false;
         protected csModbusLib.ConnectionType InterfaceType = ConnectionType.NO_CONNECTION;
         protected MbInterface modbusConnection;
+        public string ConnectionInfo { get; protected set; }
         protected List<ModbusView> _ModbusViewList;
-
+        protected byte SlaveID;
         public delegate void DisplayErrorCode_Delegate(csModbusLib.ErrorCodes ErrCode);
         public event DisplayErrorCode_Delegate ErrorCodeEvent;
 
@@ -53,7 +54,7 @@ namespace csModbusViewer
             ErrorCodeEvent?.Invoke(ErrCode);
         }
 
-        public csModbusLib.ConnectionType InitConnection(out string ConnectionInfo)
+        public csModbusLib.ConnectionType InitConnection()
         {
             switch (Settings.Default.Connection) {
                 case "RTU": {
@@ -73,14 +74,12 @@ namespace csModbusViewer
                 case "TCP": {
                         InterfaceType = csModbusLib.ConnectionType.TCP_IP;
                         modbusConnection = TCPInterface(Settings.Default.Hostname, Settings.Default.TCPport);
-                        ConnectionInfo = string.Format("TCP {0} Port {1}", Settings.Default.Hostname, Settings.Default.TCPport);
                         break;
                     }
 
                 case "UDP": {
                         InterfaceType = csModbusLib.ConnectionType.UDP_IP;
                         modbusConnection = UDPInterface(Settings.Default.Hostname, Settings.Default.TCPport);
-                        ConnectionInfo = string.Format("UDP {0}:{1}", Settings.Default.Hostname, Settings.Default.TCPport);
                         break;
                     }
 
@@ -91,6 +90,8 @@ namespace csModbusViewer
                         break;
                     }
             }
+            SlaveID =  (byte) Settings.Default.SlaveID;
+            ConnectionInfo += string.Format(" ID:{0}", SlaveID);
             return InterfaceType;
         }
 

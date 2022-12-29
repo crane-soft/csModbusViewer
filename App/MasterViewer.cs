@@ -39,7 +39,7 @@ namespace csModbusViewer
 
         public override bool Connect()
         {
-            if (ModMaster.Connect(modbusConnection, 1)) {
+            if (ModMaster.Connect(modbusConnection, SlaveID)) {
                 sysRefreshTimer.Enabled = true;
                 return true;
             }
@@ -80,11 +80,13 @@ namespace csModbusViewer
 
         protected override MbInterface TCPInterface(string hostName, int port)
         {
+            ConnectionInfo = string.Format("TCP {0}:{1}", hostName, port);
             return new MbTCPMaster(hostName, port);
         }
 
         protected override MbInterface UDPInterface(string hostName, int port)
         {
+            ConnectionInfo = string.Format("UDP {0}:{1}", hostName, port);
             return new MbUDPMaster(hostName, port);
         }
     }

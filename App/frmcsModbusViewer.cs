@@ -379,8 +379,8 @@ namespace csModbusViewer
             if (ModbusViewer == null)
                 return;
             string ConnectionInfo;
-            if (ModbusViewer.InitConnection(out ConnectionInfo) != ConnectionType.NO_CONNECTION) {
-                lbConnectionOptions.Text = ConnectionInfo;
+            if (ModbusViewer.InitConnection() != ConnectionType.NO_CONNECTION) {
+                lbConnectionOptions.Text = ModbusViewer.ConnectionInfo;
                 ToolButtonStart.Enabled = true;
             } else {
                 ToolButtonStart.Enabled = false;
