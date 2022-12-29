@@ -74,6 +74,8 @@ namespace csFormsDesign
             }
 
             DeleteControlMenu = new MenuItem("Delete");
+            DeleteControlMenu.Shortcut = Shortcut.Del;
+            DeleteControlMenu.ShowShortcut = true;
             ExitDesignMenu = new MenuItem("Exit design mode");
 
 
@@ -84,11 +86,13 @@ namespace csFormsDesign
         public void ShowContextMenu(object sender, MouseEventArgs e)
         {
             ContextMenuArgs = e;
+
             DesignContextMenu.MenuItems.Clear();
             DesignContextMenu.MenuItems.Add(NewControlMenu);
 
             if (sender.GetType() == typeof(csControlCover)) {
                 DesignContextMenu.MenuItems.Add(DeleteControlMenu);
+
             }
             DesignContextMenu.MenuItems.Add("-");
             DesignContextMenu.MenuItems.Add(ExitDesignMenu);
@@ -128,8 +132,17 @@ namespace csFormsDesign
             controlCover.MouseDown += ControlCover_MouseDown;
             controlCover.Resize += ControlCover_BoundsChanged;
             controlCover.Move += ControlCover_BoundsChanged;
+            controlCover.KeyDown += ControlCover_KeyDown;
             if (doSelct)
                 AssignCover(controlCover);
+        }
+
+        private void ControlCover_KeyDown(object sender, KeyEventArgs e)
+        {
+            var DelShortcut = (Keys)DeleteControlMenu.Shortcut;
+            if (e.KeyData == DelShortcut) {
+                DeleteControlMenu_Click(null,EventArgs.Empty);
+            }
         }
 
         private void ControlCover_BoundsChanged(object sender, EventArgs e)

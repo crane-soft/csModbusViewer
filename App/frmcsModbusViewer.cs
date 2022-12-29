@@ -67,6 +67,7 @@ namespace csModbusViewer
             this.designerToolStripMenuItem.Enabled = enable;
             this.ToolButtonStart.Enabled = enable;
         }
+
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ViewerIsOpen()) {
@@ -150,7 +151,6 @@ namespace csModbusViewer
             this.saveAsToolStripMenuItem.Enabled = true;
             EnableCommands(true);
         }
-
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -378,7 +378,6 @@ namespace csModbusViewer
         {
             if (ModbusViewer == null)
                 return;
-            string ConnectionInfo;
             if (ModbusViewer.InitConnection() != ConnectionType.NO_CONNECTION) {
                 lbConnectionOptions.Text = ModbusViewer.ConnectionInfo;
                 ToolButtonStart.Enabled = true;
