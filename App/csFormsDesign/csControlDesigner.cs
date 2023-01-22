@@ -15,7 +15,6 @@ namespace csFormsDesign
     class csControlDesigner
     {
         private List<csControlCover> ControlCoverList = new List<csControlCover>();
-        private List<cSizeHandle> sizeHandleList = new List<cSizeHandle>();
         private csControlCover selectedCover;
         private PropertyGrid properties;
 
@@ -31,18 +30,12 @@ namespace csFormsDesign
         public event MouseEventHandler DeleteControlEvent;
         public event MouseEventHandler NewControlEvent;
 
+        public csSizeFrame SizeFrame { get; private set; }
+
         public csControlDesigner(PropertyGrid properties)
         {
             this.properties = properties;
-            sizeHandleList.Add(new cTopSizehandle());
-            sizeHandleList.Add(new cBottomSizehandle());
-            sizeHandleList.Add(new cLeftSizehandle());
-            sizeHandleList.Add(new cRightSizehandle());
-            sizeHandleList.Add(new cTopLefSizehandle());
-            sizeHandleList.Add(new cTopRightSizehandle());
-            sizeHandleList.Add(new cBottomLeftSizehandle());
-            sizeHandleList.Add(new cBottomRightSizehandle());
-            AllSizeHandleVisible = false;
+            SizeFrame = new csSizeFrame();
             properties.PropertyValueChanged += Properties_PropertyValueChanged;
         }
 
@@ -50,7 +43,6 @@ namespace csFormsDesign
         {
             if (selectedCover != null) {
                 selectedCover.UpdateBoundsFromControl();
-                AdjustHandles();
             }
         }
 
@@ -124,7 +116,7 @@ namespace csFormsDesign
             ExitDesignModeEvent?.Invoke();
         }
 
-        public void AddControl(Control control, bool doSelct = false)
+        public void AddControl(Panel control, bool doSelct = false)
         {
             csControlCover controlCover = new csControlCover(this, control);
             controlCover.Tag = ControlCoverList.Count + 1;
@@ -157,11 +149,8 @@ namespace csFormsDesign
                 cover.Parent = null;
                 cover.Dispose();
             }
-            foreach (cSizeHandle sizeHandle in sizeHandleList) {
-                sizeHandle.Parent = null;
-                sizeHandle.Dispose();
-            }
-        }
+            SizeFrame.Close();
+         }
 
         private void ControlCover_MouseDown(object sender, MouseEventArgs e)
         {
@@ -190,32 +179,8 @@ namespace csFormsDesign
             DeselecControl();
             selectedCover = cover;
             selectedCover.CoversSelect();
-            AdjustHandles();
-            AllSizeHandleVisible = true;
             //properties.SelectedObject =  clickedCover.assignedControl;  // nur wenn alle Properties angezeigt werden sollem
             properties.SelectedObject = new mbViewProperties(cover.assignedControl); // meine Auswahl
-        }
-
-        private void AdjustHandles()
-        {
-            foreach (cSizeHandle sizeHandle in sizeHandleList) {
-                sizeHandle.Parent = selectedCover.Parent;
-                sizeHandle.AssignControl(selectedCover);
-            }
-        }
-
-        public bool AllSizeHandleVisible {
-            set {
-                foreach (cSizeHandle sizeHandle in sizeHandleList) {
-                    sizeHandle.Visible = value;
-                }
-            }
-        }
-        public void ReDrawAllSizeHandles()
-        {
-            foreach (cSizeHandle sizeHandle in sizeHandleList) {
-                sizeHandle.ReDraw();
-            }
         }
     }
 }

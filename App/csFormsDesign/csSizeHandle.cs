@@ -74,7 +74,6 @@ namespace csFormsDesign
         {
             InitDraw();
             this.BringToFront();
-            this.Visible = true;
             this.Refresh();
         }
 

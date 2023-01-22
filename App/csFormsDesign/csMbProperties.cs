@@ -18,7 +18,7 @@ namespace csFormsDesign
             "Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames",
             /* Layout */
             // "Anchor", not working so far, due to split panel 
-            "Location", "Size"
+            "AutoSize","Location", "Size"
         };
 
         private object WrappedObject;

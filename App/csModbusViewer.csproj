@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="csFormsDesign\csControlDesigner.cs" />
     <Compile Include="csFormsDesign\csMbProperties.cs" />
+    <Compile Include="csFormsDesign\csSizeFrame.cs" />
     <Compile Include="csFormsDesign\csSizeHandle.cs">
       <SubType>Component</SubType>
     </Compile>

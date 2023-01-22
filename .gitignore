@@ -1,3 +1,4 @@
 /App/obj
 /App/bin
 /App/*.user
+/App/.vs

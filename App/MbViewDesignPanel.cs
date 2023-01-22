@@ -128,9 +128,9 @@ namespace csModbusViewer
         private void Properties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             ModbusView SelectedControl = (ModbusView)controldesigner.SelectedControl;
-            if (SelectedControl != null) {
-                SelectedControl.AdjustSize();
-            }
+            //if (SelectedControl != null) {
+            //   SelectedControl.AdjustSize();
+            //}
         }
 
         private void Controldesigner_NewControlEvent(object sender, MouseEventArgs e)

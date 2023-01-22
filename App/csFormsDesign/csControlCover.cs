@@ -15,52 +15,59 @@ namespace csFormsDesign
     class csControlCover : AirControl
     {
         private csControlDesigner controlDesigner;
+        private csSizeFrame SizeFrame;
         private Point MouseStart = new Point();
         private bool MousIsDown = false;
-        public Control assignedControl { get; set; }
+        private bool PaintSelectFrame;
+        public Panel assignedControl { get; set; }
 
-        public csControlCover(csControlDesigner designer, Control control)
+        public csControlCover(csControlDesigner designer, Panel control)
         {
             controlDesigner = designer;
+            SizeFrame = controlDesigner.SizeFrame;
             assignedControl = control;
             this.Parent = control.Parent;
             this.Bounds = assignedControl.Bounds;
             this.BringToFront();
+            this.Cursor = Cursors.SizeAll;
+            this.MouseDown += Control_MouseDown;
+            this.MouseUp += Control_MouseUp;
+            this.MouseMove += Control_MouseMove;
+
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             Graphics gr = e.Graphics;
-            if (MousIsDown) {
+            if (PaintSelectFrame) {
                 Rectangle borderRectangle = this.ClientRectangle;
                 ControlPaint.DrawBorder(gr, borderRectangle, Color.Blue, ButtonBorderStyle.Solid);
+                //borderRectangle = new Rectangle(ClientRectangle.Top , ClientRectangle.Left, 4, 4);
+                //ControlPaint.DrawBorder(gr, borderRectangle, Color.Blue, ButtonBorderStyle.Solid);
             }
         }
 
         public void CoversSelect()
         {
-            this.Cursor = Cursors.SizeAll;
             assignedControl.BringToFront();
             this.BringToFront();
-
-            this.MouseDown += Control_MouseDown;
-            this.MouseUp += Control_MouseUp;
-            this.MouseMove += Control_MouseMove;
         }
 
         public void Release()
         {
-            controlDesigner.AllSizeHandleVisible = false;
-            this.MouseDown -= Control_MouseDown;
-            this.MouseUp -= Control_MouseUp;
-            this.MouseMove -= Control_MouseMove;
-
+            SizeFrame.Visible = false;
+            PaintSelectFrame = false;
+            ReDrawAll();
         }
 
         private void Control_MouseDown(object sender, MouseEventArgs e)
         {
-            controlDesigner.AllSizeHandleVisible = false;
+            SizeFrame.IsUsed = !assignedControl.AutoSize;
+            SizeFrame.AdjustHandles(this);
+            SizeFrame.Visible = false;
+
+            PaintSelectFrame = true;
             MouseStart = e.Location;
             MousIsDown = true;
         }
@@ -68,8 +75,8 @@ namespace csFormsDesign
         private void Control_MouseUp(object sender, MouseEventArgs e)
         {
             MousIsDown = false;
+            SizeFrame.Visible = true;
             ReDrawAll();
-
         }
 
         private void Control_MouseMove(object sender, MouseEventArgs e)
@@ -111,13 +118,16 @@ namespace csFormsDesign
         public void UpdateBoundsFromControl()
         {
             UpdateBounds(assignedControl.Bounds);
+            SizeFrame.IsUsed = ! assignedControl.AutoSize;
+            SizeFrame.AdjustHandles(this);
         }
-    
         private void ReDrawAll()
         {
+            this.Visible = false;
             assignedControl.Refresh();
+            this.Visible = true;
             this.Refresh();
-            controlDesigner.ReDrawAllSizeHandles();
+            SizeFrame.ReDrawAllSizeHandles();
         }
     }
 }
