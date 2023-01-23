@@ -1,0 +1,32 @@
+{
+  "DeviceType": "SLAVE",
+  "ViewSize": "700, 501",
+  "ModbusViewList": [
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "Holding Regs 1",
+      "BaseAddr": 10,
+      "NumItems": 8,
+      "Location": "3, 3",
+      "Size": "141, 164"
+    },
+    {
+      "$type": "csModbusView.CoilsGridView, csModbusView",
+      "Title": "Coils",
+      "BaseAddr": 10,
+      "NumItems": 20,
+      "ItemColumns": 8,
+      "Location": "150, 3",
+      "Size": "224, 74"
+    },
+    {
+      "$type": "csModbusView.CoilsGridView, csModbusView",
+      "Title": "Coils",
+      "BaseAddr": 30,
+      "NumItems": 24,
+      "ItemColumns": 8,
+      "Location": "150, 85",
+      "Size": "224, 74"
+    }
+  ]
+}

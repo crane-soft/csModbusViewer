@@ -53,7 +53,7 @@ namespace csModbusViewer
 
             EnableCommands(false);
 
-            MbViewPanel.SetMbControlSelect(MbViewTree);
+            MbViewPanel.InitSelectTree(MbViewTree);
             MbViewPanel.ExitDesignModeEvent += ViewPanel_ExitDesignModeEvent;
 
             StatusErrorCount.Text = "";

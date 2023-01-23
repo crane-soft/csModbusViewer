@@ -58,10 +58,16 @@
     <Compile Include="csFormsDesign\AirControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="csFormsDesign\csContolDrop.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="csFormsDesign\csControlCover.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="csFormsDesign\csControlDesigner.cs" />
+    <Compile Include="csFormsDesign\csDesignerContextMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="csFormsDesign\csMbProperties.cs" />
     <Compile Include="csFormsDesign\csSizeFrame.cs" />
     <Compile Include="csFormsDesign\csSizeHandle.cs">

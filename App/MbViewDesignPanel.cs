@@ -17,74 +17,53 @@ namespace csModbusViewer
     {
         protected List<ModbusView> ModbusViewList;
         private csControlDesigner controldesigner;
-        public event csControlDesigner.ExitDesignDelegate ExitDesignModeEvent;
+        public event csDesignerContextMenu.Delegate ExitDesignModeEvent;
 
-        private TreeView MbControlSelect;
-        private ToolTip ViewAddTip = new ToolTip();
-        private TreeNode ViewAddNode;
-        private AirControl CtrlPlacer = new AirControl();
+        private TreeView MbViewlSelectTree;
+        private csContolDrop  ControlDrop;
+      
+        private csDesignerContextMenu DesignContextMenu;
 
         public MbViewDesignPanel()
         {
+            ControlDrop = new csContolDrop(this);
+            ControlDrop.ControlDropped += ControlDrop_ControlDropped;
             this.MouseClick += MbViewPanel_MouseClick;
-
-            CtrlPlacer.MouseMove += CtrlPlacer_MouseMove;
-            CtrlPlacer.MouseLeave += CtrlPlacer_MouseLeave;
-            CtrlPlacer.MouseDown += CtrlPlacer_MouseDown;
         }
 
-        public void SetMbControlSelect (TreeView selectTree)
+        public void InitSelectTree (TreeView selectTree)
         {
-            MbControlSelect = selectTree;
-            MbControlSelect.NodeMouseClick += AddControlTree_NodeMouseClick; ;
+            MbViewlSelectTree = selectTree;
+            MbViewlSelectTree.NodeMouseClick += AddControlTree_NodeMouseClick; ;
         }
 
         private void AddControlTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Node.Level == 0) {
-                MbControlSelect.SelectedNode = null;
-                FinishPlacer();
+                MbViewlSelectTree.SelectedNode = null;
+                FinishDrop();
                 return;
             }
-            MbControlSelect.SelectedNode = e.Node;
-            MbControlSelect.Cursor = Cursors.Cross;
+            MbViewlSelectTree.SelectedNode = e.Node;
+            MbViewlSelectTree.Cursor = Cursors.Cross;
             Cursor = Cursors.Cross;
-            ViewAddTip.ShowAlways = true;
-            ViewAddNode = e.Node;
-
-            CtrlPlacer.Size = this.Size;
-            CtrlPlacer.Parent = this;
-            CtrlPlacer.BringToFront();
+            ControlDrop.Activate(e.Node);
         }
 
-        private void CtrlPlacer_MouseDown(object sender, MouseEventArgs e)
+        private void ControlDrop_ControlDropped(object sender, MouseEventArgs e)
         {
-            if ((e.Button == MouseButtons.Left) && (ViewAddNode != null)) {
-                New_MbViewControl(ViewAddNode.Index, e.Location);
+            if (sender != null) {
+                TreeNode DropObject = (TreeNode)sender;
+                New_MbViewControl(DropObject.Index, e.Location);
             }
-            FinishPlacer();
+            FinishDrop();
         }
 
-        private void FinishPlacer()
+        private void FinishDrop()
         {
             Cursor = Cursors.Default;
-            MbControlSelect.Cursor = Cursors.Default;
-            MbControlSelect.SelectedNode = null;
-            ViewAddTip.Hide(this);
-            CtrlPlacer.Parent = null;
-            ViewAddNode = null;
-        }
-
-        private void CtrlPlacer_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (ViewAddNode != null) {
-                ViewAddTip.Show(ViewAddNode.Text, this, e.X + 2, e.Y + 2);
-            }
-        }
-
-        private void CtrlPlacer_MouseLeave(object sender, EventArgs e)
-        {
-            ViewAddTip.Hide(this);
+            MbViewlSelectTree.Cursor = Cursors.Default;
+            MbViewlSelectTree.SelectedNode = null;
         }
 
         private void MbViewPanel_MouseClick(object sender, MouseEventArgs e)
@@ -92,7 +71,7 @@ namespace csModbusViewer
             if (controldesigner != null) {
                 controldesigner.DeselecControl();
                 if (e.Button == MouseButtons.Right) {
-                    controldesigner.ShowContextMenu(this, e);
+                    DesignContextMenu.ShowMenu(this, e);
                 }
             }
         }
@@ -106,35 +85,32 @@ namespace csModbusViewer
             this.ModbusViewList = ModbusViewList;
         }
 
-
         public void EnableDesignMode(PropertyGrid properties)
         {
-            MbControlSelect.ExpandAll();
-            MbControlSelect.SelectedNode = null;
-            properties.PropertyValueChanged += Properties_PropertyValueChanged;
-            string[] NewItemList = {"Holding Register","Input Registser","Coils","Discret Inputs"};
+            MbViewlSelectTree.ExpandAll();
+            MbViewlSelectTree.SelectedNode = null;
             controldesigner = new csControlDesigner(properties);
-            controldesigner.CreateContextMenu(NewItemList);
+            CreateContextMenu();
+
             foreach (ModbusView mbView in ModbusViewList) {
                 mbView.setDesignMode(true);
                 controldesigner.AddControl(mbView);
             }
-            controldesigner.ExitDesignModeEvent += Controldesigner_ExitDesignModeEvent;
-            controldesigner.DeleteControlEvent += Controldesigner_DeleteControlEvent;
-            controldesigner.NewControlEvent += Controldesigner_NewControlEvent;
-
         }
 
-        private void Properties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        private void CreateContextMenu()
         {
-            ModbusView SelectedControl = (ModbusView)controldesigner.SelectedControl;
-            //if (SelectedControl != null) {
-            //   SelectedControl.AdjustSize();
-            //}
+            string[] NewItemList = { "Holding Register", "Input Registser", "Coils", "Discret Inputs" };
+            DesignContextMenu = new csDesignerContextMenu(NewItemList);
+            DesignContextMenu.NewControlEvent += DesignContextMenu_NewControlEvent;
+            DesignContextMenu.DeleteControlEvent += DesignContextMenu_DeleteControlEvent;
+            DesignContextMenu.ExitDesignModeEvent += DesignContextMenu_ExitDesignModeEvent; ;
+            controldesigner.DesignContextMenu = DesignContextMenu;
         }
 
-        private void Controldesigner_NewControlEvent(object sender, MouseEventArgs e)
+        private void DesignContextMenu_NewControlEvent(object sender, MouseEventArgs e)
         {
+            controldesigner.DeselecControl();
             MenuItem SubMenu = (MenuItem)sender;
             New_MbViewControl(SubMenu.Index, e.Location);
         }
@@ -166,15 +142,19 @@ namespace csModbusViewer
             controldesigner.AddControl(NewModbusView, true);
         }
 
-        private void Controldesigner_DeleteControlEvent(object sender, MouseEventArgs e)
+        private void DesignContextMenu_DeleteControlEvent(object sender, MouseEventArgs e)
         {
-            ModbusView mbView = (ModbusView)sender;
-            ModbusViewList.Remove(mbView);
-            this.Controls.Remove(mbView);
-            mbView.Dispose();
+            if (sender != null) {
+                csControlCover delCover = (csControlCover)sender;
+                ModbusView mbView = (ModbusView)delCover.assignedControl; 
+                ModbusViewList.Remove(mbView);
+                this.Controls.Remove(mbView);
+                mbView.Dispose();
+                controldesigner.DeleteControl(delCover);
+            }
         }
 
-        private void Controldesigner_ExitDesignModeEvent()
+        private void DesignContextMenu_ExitDesignModeEvent()
         {
             ExitDesignModeEvent?.Invoke();
         }
@@ -182,7 +162,6 @@ namespace csModbusViewer
         public void CloseDesignMode()
         {
             controldesigner.CloseDesigner();
-            
             controldesigner = null;
             foreach (ModbusView mbView in ModbusViewList) {
                 mbView.setDesignMode(false);

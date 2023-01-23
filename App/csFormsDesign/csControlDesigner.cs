@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
-
+using csModbusView;
 namespace csFormsDesign
 {
 
@@ -18,20 +18,9 @@ namespace csFormsDesign
         private csControlCover selectedCover;
         private PropertyGrid properties;
 
-        private ContextMenu DesignContextMenu;
-        private MenuItem NewControlMenu;
-        private MenuItem DeleteControlMenu;
-        private MenuItem ExitDesignMenu;
-        private MouseEventArgs ContextMenuArgs;
-
-        public delegate void ExitDesignDelegate();
-        public event  ExitDesignDelegate ExitDesignModeEvent;
-
-        public event MouseEventHandler DeleteControlEvent;
-        public event MouseEventHandler NewControlEvent;
 
         public csSizeFrame SizeFrame { get; private set; }
-
+        public csDesignerContextMenu DesignContextMenu { get; set; }
         public csControlDesigner(PropertyGrid properties)
         {
             this.properties = properties;
@@ -42,7 +31,7 @@ namespace csFormsDesign
         private void Properties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             if (selectedCover != null) {
-                selectedCover.UpdateBoundsFromControl();
+                selectedCover.PropertyChanged();
             }
         }
 
@@ -53,67 +42,6 @@ namespace csFormsDesign
                 }
                 return null;
             }
-        }
-
-        public void CreateContextMenu(string[] NewItemList)
-        {
-            DesignContextMenu = new ContextMenu();
-
-            NewControlMenu = new MenuItem("New");
-            for (int i = 0; i < NewItemList.Length; ++i) {
-                NewControlMenu.MenuItems.Add(NewItemList[i]);
-                NewControlMenu.MenuItems[i].Click += NewControlMenu_Click;
-            }
-
-            DeleteControlMenu = new MenuItem("Delete");
-            DeleteControlMenu.Shortcut = Shortcut.Del;
-            DeleteControlMenu.ShowShortcut = true;
-            ExitDesignMenu = new MenuItem("Exit design mode");
-
-
-            DeleteControlMenu.Click += DeleteControlMenu_Click;
-            ExitDesignMenu.Click += ExitDesignMenu_Click;
-        }
-
-        public void ShowContextMenu(object sender, MouseEventArgs e)
-        {
-            ContextMenuArgs = e;
-
-            DesignContextMenu.MenuItems.Clear();
-            DesignContextMenu.MenuItems.Add(NewControlMenu);
-
-            if (sender.GetType() == typeof(csControlCover)) {
-                DesignContextMenu.MenuItems.Add(DeleteControlMenu);
-
-            }
-            DesignContextMenu.MenuItems.Add("-");
-            DesignContextMenu.MenuItems.Add(ExitDesignMenu);
-            DesignContextMenu.Show((Control)sender, e.Location);
-        }
-
-        private void NewControlMenu_Click(object sender, EventArgs e)
-        {
-            DeselecControl();
-            NewControlEvent?.Invoke(sender, ContextMenuArgs);
-        }
-
-        private void DeleteControlMenu_Click(object sender, EventArgs e)
-        {
-            if (selectedCover != null) {
-                csControlCover delCover = selectedCover;
-                Control assignedControl = delCover.assignedControl;
-                DeselecControl();
-                DeleteControlEvent?.Invoke(delCover.assignedControl, ContextMenuArgs);
-
-                ControlCoverList.Remove(delCover);
-                delCover.Dispose();
-                delCover = null;
-            }
-        }
-
-        private void ExitDesignMenu_Click(object sender, EventArgs e)
-        {
-            ExitDesignModeEvent?.Invoke();
         }
 
         public void AddControl(Panel control, bool doSelct = false)
@@ -131,10 +59,7 @@ namespace csFormsDesign
 
         private void ControlCover_KeyDown(object sender, KeyEventArgs e)
         {
-            var DelShortcut = (Keys)DeleteControlMenu.Shortcut;
-            if (e.KeyData == DelShortcut) {
-                DeleteControlMenu_Click(null,EventArgs.Empty);
-            }
+            DesignContextMenu?.KeyDownEvent(sender, e);
         }
 
         private void ControlCover_BoundsChanged(object sender, EventArgs e)
@@ -158,10 +83,18 @@ namespace csFormsDesign
             AssignCover(clickedCover);
 
             if (e.Button == MouseButtons.Right) {
-                ShowContextMenu(selectedCover,e);
+                DesignContextMenu?.ShowMenu(selectedCover,e);
             }
         }
-  
+
+        public void DeleteControl(csControlCover delCover)
+        {
+            DeselecControl();
+            ControlCoverList.Remove(delCover);
+            delCover.Dispose();
+            delCover = null;
+        }
+
         public void DeselecControl()
         {
             if (selectedCover != null) {
@@ -173,10 +106,9 @@ namespace csFormsDesign
 
         public void AssignCover(csControlCover cover)
         {
-            cover.Focus();
-            if (cover == selectedCover)
-                return;
-            DeselecControl();
+            if (cover != selectedCover) {
+                DeselecControl();
+            }
             selectedCover = cover;
             selectedCover.CoversSelect();
             //properties.SelectedObject =  clickedCover.assignedControl;  // nur wenn alle Properties angezeigt werden sollem

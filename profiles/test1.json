@@ -1,0 +1,23 @@
+{
+  "DeviceType": "MASTER",
+  "ViewSize": "826, 436",
+  "ModbusViewList": [
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "Holding Regs 1",
+      "BaseAddr": 10,
+      "NumItems": 8,
+      "Location": "3, 3",
+      "Size": "141, 164"
+    },
+    {
+      "$type": "csModbusView.DiscretInputsGridView, csModbusView",
+      "Title": "DiscretInputs",
+      "BaseAddr": 20,
+      "NumItems": 20,
+      "ItemColumns": 8,
+      "Location": "185, 9",
+      "Size": "249, 80"
+    }
+  ]
+}

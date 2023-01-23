@@ -10,7 +10,7 @@ namespace csFormsDesign
     class csSizeFrame
     {
         private List<cSizeHandle> sizeHandleList = new List<cSizeHandle>();
-        private bool _IsUsed;
+        //private bool _IsUsed;
         private bool _Visible;
         public csSizeFrame()
         {
@@ -23,17 +23,6 @@ namespace csFormsDesign
             sizeHandleList.Add(new cBottomLeftSizehandle());
             sizeHandleList.Add(new cBottomRightSizehandle());
             Visible = false;
-        }
-
-        public bool IsUsed
-        {
-            get {
-                return _IsUsed;
-            }
-            set {
-                _IsUsed = value;
-                SetVisible();
-            }
         }
 
         public bool Visible
@@ -59,27 +48,25 @@ namespace csFormsDesign
             foreach (cSizeHandle sizeHandle in sizeHandleList) {
                 sizeHandle.Parent = selectedCover.Parent;
                 sizeHandle.AssignControl(selectedCover);
+                sizeHandle.Visible = _Visible;
             }
         }
 
         public void ReDrawAllSizeHandles()
         {
-            if (_IsUsed) {
+            if (_Visible) {
                 foreach (cSizeHandle sizeHandle in sizeHandleList) {
                     sizeHandle.ReDraw();
-                    sizeHandle.Visible = _IsUsed & _Visible;
+                    sizeHandle.Visible = _Visible;
                 }
             }
         }
 
         private void SetVisible()
         {
-            bool sVisible = _IsUsed & _Visible;
             foreach (cSizeHandle sizeHandle in sizeHandleList) {
-                sizeHandle.Visible = sVisible;
+                sizeHandle.Visible = _Visible;
             }
-
         }
-
     }
 }

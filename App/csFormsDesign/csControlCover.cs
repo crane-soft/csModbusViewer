@@ -18,7 +18,7 @@ namespace csFormsDesign
         private csSizeFrame SizeFrame;
         private Point MouseStart = new Point();
         private bool MousIsDown = false;
-        private bool PaintSelectFrame;
+        private bool SelectFrame;
         public Panel assignedControl { get; set; }
 
         public csControlCover(csControlDesigner designer, Panel control)
@@ -33,14 +33,14 @@ namespace csFormsDesign
             this.MouseDown += Control_MouseDown;
             this.MouseUp += Control_MouseUp;
             this.MouseMove += Control_MouseMove;
-
         }
+   
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             Graphics gr = e.Graphics;
-            if (PaintSelectFrame) {
+            if (SelectFrame) {
                 Rectangle borderRectangle = this.ClientRectangle;
                 ControlPaint.DrawBorder(gr, borderRectangle, Color.Blue, ButtonBorderStyle.Solid);
                 //borderRectangle = new Rectangle(ClientRectangle.Top , ClientRectangle.Left, 4, 4);
@@ -50,24 +50,24 @@ namespace csFormsDesign
 
         public void CoversSelect()
         {
+            SelectFrame = true;
             assignedControl.BringToFront();
             this.BringToFront();
+            this.Focus();
         }
 
         public void Release()
         {
             SizeFrame.Visible = false;
-            PaintSelectFrame = false;
+            SelectFrame = false;
+            MousIsDown = false;
             ReDrawAll();
         }
 
         private void Control_MouseDown(object sender, MouseEventArgs e)
         {
-            SizeFrame.IsUsed = !assignedControl.AutoSize;
-            SizeFrame.AdjustHandles(this);
             SizeFrame.Visible = false;
-
-            PaintSelectFrame = true;
+            SelectFrame = true;
             MouseStart = e.Location;
             MousIsDown = true;
         }
@@ -75,8 +75,10 @@ namespace csFormsDesign
         private void Control_MouseUp(object sender, MouseEventArgs e)
         {
             MousIsDown = false;
-            SizeFrame.Visible = true;
+            SizeFrame.AdjustHandles(this);
+            SizeFrame.Visible = !assignedControl.AutoSize;
             ReDrawAll();
+            this.Focus();
         }
 
         private void Control_MouseMove(object sender, MouseEventArgs e)
@@ -115,17 +117,17 @@ namespace csFormsDesign
             ReDrawAll();
         }
 
-        public void UpdateBoundsFromControl()
+        public void PropertyChanged()
         {
+            SizeFrame.Visible = !assignedControl.AutoSize;
             UpdateBounds(assignedControl.Bounds);
-            SizeFrame.IsUsed = ! assignedControl.AutoSize;
             SizeFrame.AdjustHandles(this);
         }
         private void ReDrawAll()
         {
-            this.Visible = false;
+            assignedControl.BringToFront();
             assignedControl.Refresh();
-            this.Visible = true;
+            this.BringToFront();
             this.Refresh();
             SizeFrame.ReDrawAllSizeHandles();
         }
