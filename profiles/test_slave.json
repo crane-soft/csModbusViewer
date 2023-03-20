@@ -4,11 +4,12 @@
   "ModbusViewList": [
     {
       "$type": "csModbusView.HoldingRegsGridView, csModbusView",
-      "Title": "Holding Regs 1",
+      "Title": "INT16 Register",
       "BaseAddr": 10,
       "NumItems": 8,
+      "AutoSize": true,
       "Location": "3, 3",
-      "Size": "141, 164"
+      "Size": "125, 164"
     },
     {
       "$type": "csModbusView.CoilsGridView, csModbusView",
@@ -16,6 +17,7 @@
       "BaseAddr": 10,
       "NumItems": 20,
       "ItemColumns": 8,
+      "AutoSize": true,
       "Location": "150, 3",
       "Size": "224, 74"
     },
@@ -25,8 +27,19 @@
       "BaseAddr": 30,
       "NumItems": 24,
       "ItemColumns": 8,
+      "AutoSize": true,
       "Location": "150, 85",
       "Size": "224, 74"
+    },
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "INT32 Register",
+      "BaseAddr": 40,
+      "NumItems": 3,
+      "DataType": 2,
+      "AutoSize": true,
+      "Location": "9, 173",
+      "Size": "125, 74"
     }
   ]
 }

@@ -11,7 +11,8 @@ namespace csModbusViewer
     class MasterViewer : ViewerBase
     {
         private MbMaster ModMaster;
-
+        private bool doRefreshStop;
+        private bool RefreshRunning;
         private System.Timers.Timer sysRefreshTimer;
 
         public MasterViewer()
@@ -20,9 +21,8 @@ namespace csModbusViewer
             sysRefreshTimer = new System.Timers.Timer();
             sysRefreshTimer.Enabled = false;
             sysRefreshTimer.AutoReset = false;
-            sysRefreshTimer.Interval = 20;
+            sysRefreshTimer.Interval = 50;
             sysRefreshTimer.Elapsed += OnSystemTimedEvent;
-
         }
 
         protected override void InitViewList()
@@ -41,6 +41,7 @@ namespace csModbusViewer
         {
             if (ModMaster.Connect(modbusConnection, SlaveID)) {
                 sysRefreshTimer.Enabled = true;
+                RefreshRunning = true;
                 return true;
             }
             return false;
@@ -48,17 +49,27 @@ namespace csModbusViewer
 
         public override void CloseConnection()
         {
-            sysRefreshTimer.Enabled = false;
-            ModMaster.Close();
-        }
+            if (RefreshRunning) {
+                doRefreshStop = true;
+            } else {
+                ModMaster.Close();
+            }
+       }
 
         private void OnSystemTimedEvent(object sender, System.Timers.ElapsedEventArgs e)
         {
-            sysRefreshTimer.Enabled = false;
-            csModbusLib.ErrorCodes ErrCode;
-            ErrCode = RequestData();
-            DisplayErrorCode(ErrCode);
-            sysRefreshTimer.Enabled = true;
+            if (doRefreshStop) {
+                ModMaster.Close();
+                doRefreshStop = false;
+                RefreshRunning = false;
+            } else {
+                csModbusLib.ErrorCodes ErrCode;
+                ErrCode = RequestData();
+                if (doRefreshStop == false) {
+                    DisplayErrorCode(ErrCode);
+                }
+                sysRefreshTimer.Enabled = true;
+            }
         }
 
         private csModbusLib.ErrorCodes RequestData()

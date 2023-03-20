@@ -15,7 +15,7 @@ namespace csFormsDesign
     {
         public static string[] PropertyList = {
             /* ModbusView */
-            "Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames",
+            "Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames", "DataType",
             /* Layout */
             // "Anchor", not working so far, due to split panel 
             "AutoSize","Location", "Size"
@@ -27,6 +27,11 @@ namespace csFormsDesign
             : base(TypeDescriptor.GetProvider(o).GetTypeDescriptor(o))
         {
             WrappedObject = o;
+
+            if (typeof(ModbusView).IsAssignableFrom(WrappedObject.GetType())) {
+                ModbusView mb = (ModbusView)WrappedObject;
+                mb.setBrowsableProperties();
+            }
         }
         public override PropertyDescriptorCollection GetProperties()
         {

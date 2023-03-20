@@ -24,6 +24,10 @@ namespace csModbusViewer
       
         private csDesignerContextMenu DesignContextMenu;
 
+        private System.Type[] MasterViewerList = { typeof(MasterHoldingRegsGridView), typeof(MasterInputRegsGridView), typeof(MasterCoilsGridView), typeof(MasterDiscretInputsGridView) };
+        private System.Type[] SlaveViewerList = { typeof(SlaveHoldingRegsGridView), typeof(SlaveInputRegsGridView), typeof(SlaveCoilsGridView), typeof(SlaveDiscretInputsGridView) };
+        private System.Type[] ViewerTypeList;
+
         public MbViewDesignPanel()
         {
             ControlDrop = new csContolDrop(this);
@@ -85,8 +89,16 @@ namespace csModbusViewer
             this.ModbusViewList = ModbusViewList;
         }
 
-        public void EnableDesignMode(PropertyGrid properties)
+        public void EnableDesignMode(DeviceType ViewerType, PropertyGrid properties)
         {
+            object[] MasterVieweList = { typeof(MasterHoldingRegsGridView) };
+
+            if (ViewerType == DeviceType.MASTER) {
+                ViewerTypeList = MasterViewerList;
+            } else {
+                ViewerTypeList = SlaveViewerList;
+            }
+
             MbViewlSelectTree.ExpandAll();
             MbViewlSelectTree.SelectedNode = null;
             controldesigner = new csControlDesigner(properties);
@@ -117,23 +129,7 @@ namespace csModbusViewer
 
         private void New_MbViewControl(int ControlIdx, Point Location)
         {
-            ModbusView NewModbusView = null;
-            switch (ControlIdx) {
-                case 0:
-                    NewModbusView = new MasterHoldingRegsGridView();
-                    break;
-                case 1:
-                    NewModbusView = new MasterInputRegsGridView();
-                    break;
-                case 2:
-                    NewModbusView = new MasterCoilsGridView();
-                    break;
-                case 3:
-                    NewModbusView = new MasterDiscretInputsGridView();
-                    break;
-                default:
-                    return;
-            }
+            ModbusView NewModbusView = (ModbusView)Activator.CreateInstance(ViewerTypeList[ControlIdx]);
             NewModbusView.Location = Location;
             NewModbusView.setDesignMode(true);
 

@@ -252,7 +252,7 @@ namespace csModbusViewer
                     ModbusStop();
                 lbLastError.Text = "Design Mode";
                 mainSplitContainer.Panel2Collapsed = false;
-                MbViewPanel.EnableDesignMode(MbViewPropertyGrid);
+                MbViewPanel.EnableDesignMode(ViewerType, MbViewPropertyGrid);
                 openToolStripMenuItem.Enabled = false;
                 newToolStripMenuItem.Enabled = false;
                 ToolButtonStart.Enabled = false;
@@ -307,8 +307,6 @@ namespace csModbusViewer
 
         private void ModbusStop()
         {
-            // TODO Master should closed at the end of one polling cycle
-            // therfor better make a close request here which is executet in the timer
             if (Running) {
                 ModbusViewer.CloseConnection();
                 Running = false;
@@ -317,6 +315,8 @@ namespace csModbusViewer
                 SettingsToolStripMenuItem.Enabled = true;
                 ErrorCount = 0;
                 lbLastError.Text = "";
+                StatusErrorCount.Text = "";
+                LbLastModbusException.Text = "";
                 ToolButtonStart.Enabled = true;
                 ToolButtonStop.Enabled = false;
                 openToolStripMenuItem.Enabled = true;
