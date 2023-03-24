@@ -7,8 +7,7 @@
       "Title": "INT16 Register",
       "BaseAddr": 10,
       "NumItems": 8,
-      "AutoSize": true,
-      "Location": "3, 3",
+      "Location": "2, 3",
       "Size": "125, 164"
     },
     {
@@ -17,7 +16,6 @@
       "BaseAddr": 10,
       "NumItems": 20,
       "ItemColumns": 8,
-      "AutoSize": true,
       "Location": "150, 3",
       "Size": "224, 74"
     },
@@ -27,7 +25,6 @@
       "BaseAddr": 30,
       "NumItems": 24,
       "ItemColumns": 8,
-      "AutoSize": true,
       "Location": "150, 85",
       "Size": "224, 74"
     },
@@ -37,9 +34,9 @@
       "BaseAddr": 40,
       "NumItems": 3,
       "DataType": 2,
-      "AutoSize": true,
-      "Location": "9, 173",
-      "Size": "125, 74"
+      "AutoSize": false,
+      "Location": "9, 172",
+      "Size": "210, 74"
     }
   ]
 }

@@ -54,6 +54,7 @@ namespace csModbusViewer
         public override void CloseConnection()
         {
             modSlave.StopListen();
+            ListenStarted = false;
         }
 
 

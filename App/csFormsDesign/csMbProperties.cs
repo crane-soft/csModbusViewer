@@ -15,7 +15,7 @@ namespace csFormsDesign
     {
         public static string[] PropertyList = {
             /* ModbusView */
-            "Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames", "DataType",
+            "Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames", "DataType", "Endianes",
             /* Layout */
             // "Anchor", not working so far, due to split panel 
             "AutoSize","Location", "Size"

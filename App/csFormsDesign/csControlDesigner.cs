@@ -31,6 +31,10 @@ namespace csFormsDesign
         private void Properties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             if (selectedCover != null) {
+                if (e.ChangedItem.Label == "DataType") {
+                    // Refresh Properties regarding endianess or not
+                    properties.SelectedObject = new mbViewProperties(selectedCover.assignedControl); 
+                }
                 selectedCover.PropertyChanged();
             }
         }
