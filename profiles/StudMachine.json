@@ -1,0 +1,138 @@
+{
+  "DeviceType": "MASTER",
+  "ViewSize": "612, 535",
+  "ModbusViewList": [
+    {
+      "$type": "csModbusView.InputRegsGridView, csModbusView",
+      "Title": "Alive",
+      "NumItems": 2,
+      "ItemNames": [
+        "Ack",
+        "Counter"
+      ],
+      "Location": "9, 0",
+      "Size": "142, 56"
+    },
+    {
+      "$type": "csModbusView.InputRegsGridView, csModbusView",
+      "Title": "Axis-Status",
+      "BaseAddr": 2,
+      "NumItems": 3,
+      "ItemNames": [
+        "StatusX",
+        "StatusY",
+        "StatusZ"
+      ],
+      "Location": "9, 58",
+      "Size": "142, 74"
+    },
+    {
+      "$type": "csModbusView.InputRegsGridView, csModbusView",
+      "Title": "Positions",
+      "BaseAddr": 5,
+      "NumItems": 3,
+      "ItemNames": [
+        "PosX",
+        "PosY",
+        "PosZ"
+      ],
+      "DataType": 5,
+      "AutoSize": false,
+      "Location": "156, 1",
+      "Size": "182, 74"
+    },
+    {
+      "$type": "csModbusView.InputRegsGridView, csModbusView",
+      "Title": "Head Status",
+      "BaseAddr": 11,
+      "NumItems": 4,
+      "ItemNames": [
+        "Head1",
+        "Head2",
+        "Head3",
+        "Head4"
+      ],
+      "Location": "190, 133",
+      "Size": "137, 92"
+    },
+    {
+      "$type": "csModbusView.InputRegsGridView, csModbusView",
+      "Title": "Machine Status",
+      "BaseAddr": 22,
+      "NumItems": 5,
+      "ItemNames": [
+        "MachineState",
+        "MachineError1",
+        "MachineError2",
+        "MachineError3",
+        "SaftyCircuit",
+        "Count"
+      ],
+      "Location": "9, 282",
+      "Size": "174, 110"
+    },
+    {
+      "$type": "csModbusView.InputRegsGridView, csModbusView",
+      "Title": "Others",
+      "BaseAddr": 15,
+      "NumItems": 7,
+      "ItemNames": [
+        "Moving",
+        "WeldingState1",
+        "WeldingState2",
+        "Value1",
+        "Value2",
+        "ValueCounter",
+        "Command"
+      ],
+      "Location": "9, 133",
+      "Size": "175, 146"
+    },
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "Machine Commands",
+      "NumItems": 3,
+      "ItemNames": [
+        "CmdCounter",
+        "Command",
+        "Axis"
+      ],
+      "AutoSize": false,
+      "Location": "354, 1",
+      "Size": "170, 75"
+    },
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "Move Params",
+      "BaseAddr": 3,
+      "NumItems": 6,
+      "ItemNames": [
+        "TargetX",
+        "VelX",
+        "TargetY",
+        "VelY",
+        "TargetZ",
+        "VelZ"
+      ],
+      "DataType": 5,
+      "AutoSize": false,
+      "Location": "354, 81",
+      "Size": "170, 128"
+    },
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "Head Params",
+      "BaseAddr": 15,
+      "NumItems": 4,
+      "ItemNames": [
+        "Head",
+        "Feeder",
+        "NextFeeder",
+        "Misc"
+      ],
+      "AutoSize": false,
+      "Location": "354, 213",
+      "Size": "170, 92"
+    }
+  ]
+}

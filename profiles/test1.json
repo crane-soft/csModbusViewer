@@ -1,5 +1,5 @@
 {
-  "DeviceType": "MASTER",
+  "DeviceType": "SLAVE",
   "ViewSize": "826, 436",
   "ModbusViewList": [
     {
@@ -8,7 +8,7 @@
       "BaseAddr": 10,
       "NumItems": 8,
       "Location": "3, 3",
-      "Size": "141, 164"
+      "Size": "125, 164"
     },
     {
       "$type": "csModbusView.DiscretInputsGridView, csModbusView",
@@ -16,8 +16,17 @@
       "BaseAddr": 20,
       "NumItems": 20,
       "ItemColumns": 8,
-      "Location": "185, 9",
-      "Size": "249, 80"
+      "Location": "138, 4",
+      "Size": "224, 74"
+    },
+    {
+      "$type": "csModbusView.CoilsGridView, csModbusView",
+      "Title": "Coils",
+      "BaseAddr": 4,
+      "NumItems": 8,
+      "ItemColumns": 8,
+      "Location": "140, 91",
+      "Size": "218, 38"
     }
   ]
 }

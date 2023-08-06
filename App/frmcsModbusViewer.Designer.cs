@@ -48,6 +48,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,10 +68,10 @@
             this.toolStripLabelSpace = new System.Windows.Forms.ToolStripLabel();
             this.lbDeviceType = new System.Windows.Forms.ToolStripLabel();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.MbViewPanel = new csModbusViewer.MbViewDesignPanel();
             this.DesignerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.MbViewTree = new System.Windows.Forms.TreeView();
             this.MbViewPropertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.MbViewPanel = new csModbusViewer.MbViewDesignPanel();
             this.MenuStrip1.SuspendLayout();
             this.StatusStrip1.SuspendLayout();
             this.mainToolBar.SuspendLayout();
@@ -106,6 +107,7 @@
             this.toolStripSeparator1,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
+            this.saveAsDeviceToolStripMenuItem,
             this.toolStripSeparator2,
             this.ExitToolStripMenuItem});
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
@@ -116,50 +118,60 @@
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.newToolStripMenuItem.Text = "New";
             // 
             // closeToolStripMenuItem
             // 
+            this.closeToolStripMenuItem.Enabled = false;
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.closeToolStripMenuItem.Text = "Close";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(146, 6);
             // 
             // saveToolStripMenuItem
             // 
+            this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveAsToolStripMenuItem
             // 
+            this.saveAsToolStripMenuItem.Enabled = false;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.saveAsToolStripMenuItem.Text = "Save as";
+            // 
+            // saveAsDeviceToolStripMenuItem
+            // 
+            this.saveAsDeviceToolStripMenuItem.Name = "saveAsDeviceToolStripMenuItem";
+            this.saveAsDeviceToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.saveAsDeviceToolStripMenuItem.Text = "Save as device";
+            this.saveAsDeviceToolStripMenuItem.Visible = false;
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(146, 6);
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
             this.ExitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ExitToolStripMenuItem.Text = "Exit";
             // 
             // OptionsToolStripMenuItem
@@ -320,6 +332,15 @@
             this.mainSplitContainer.SplitterDistance = 375;
             this.mainSplitContainer.TabIndex = 13;
             // 
+            // MbViewPanel
+            // 
+            this.MbViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MbViewPanel.Location = new System.Drawing.Point(0, 0);
+            this.MbViewPanel.Modified = false;
+            this.MbViewPanel.Name = "MbViewPanel";
+            this.MbViewPanel.Size = new System.Drawing.Size(375, 366);
+            this.MbViewPanel.TabIndex = 0;
+            // 
             // DesignerSplitContainer
             // 
             this.DesignerSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -370,14 +391,6 @@
             this.MbViewPropertyGrid.Name = "MbViewPropertyGrid";
             this.MbViewPropertyGrid.Size = new System.Drawing.Size(215, 244);
             this.MbViewPropertyGrid.TabIndex = 2;
-            // 
-            // MbViewPanel
-            // 
-            this.MbViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MbViewPanel.Location = new System.Drawing.Point(0, 0);
-            this.MbViewPanel.Name = "MbViewPanel";
-            this.MbViewPanel.Size = new System.Drawing.Size(375, 366);
-            this.MbViewPanel.TabIndex = 0;
             // 
             // frmcsModbusViewer
             // 
@@ -444,6 +457,7 @@
         private System.Windows.Forms.SplitContainer DesignerSplitContainer;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private MbViewDesignPanel MbViewPanel;
+        private System.Windows.Forms.ToolStripMenuItem saveAsDeviceToolStripMenuItem;
     }
 }
 

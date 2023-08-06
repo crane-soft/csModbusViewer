@@ -1,6 +1,6 @@
 {
   "DeviceType": "MASTER",
-  "ViewSize": "730, 560",
+  "ViewSize": "730, 505",
   "ModbusViewList": [
     {
       "$type": "csModbusView.HoldingRegsGridView, csModbusView",
@@ -33,9 +33,9 @@
       "Title": "INT32 Register",
       "BaseAddr": 40,
       "NumItems": 3,
-      "DataType": 2,
+      "DataType": 4,
       "AutoSize": false,
-      "Location": "9, 172",
+      "Location": "9, 171",
       "Size": "210, 74"
     }
   ]

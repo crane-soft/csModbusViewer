@@ -15,9 +15,14 @@ namespace csModbusViewer
 {
     class MbViewDesignPanel : Panel
     {
-        protected List<ModbusView> ModbusViewList;
-        private csControlDesigner controldesigner;
         public event csDesignerContextMenu.Delegate ExitDesignModeEvent;
+
+        public delegate void ModifiedDelegate(bool IsModified);
+        public event ModifiedDelegate ModifiedEvent;
+
+        private List<ModbusView> ModbusViewList;
+        private bool _Modified;
+        private csControlDesigner controldesigner;
 
         private TreeView MbViewlSelectTree;
         private csContolDrop  ControlDrop;
@@ -32,6 +37,7 @@ namespace csModbusViewer
         {
             ControlDrop = new csContolDrop(this);
             ControlDrop.ControlDropped += ControlDrop_ControlDropped;
+            _Modified = false;
             this.MouseClick += MbViewPanel_MouseClick;
         }
 
@@ -39,6 +45,18 @@ namespace csModbusViewer
         {
             MbViewlSelectTree = selectTree;
             MbViewlSelectTree.NodeMouseClick += AddControlTree_NodeMouseClick; ;
+        }
+
+        public bool Modified {
+            get {
+                return _Modified;
+            }
+            set {
+                if (value != _Modified) {
+                    _Modified = value;
+                    ModifiedEvent?.Invoke(_Modified);
+                }
+            }
         }
 
         private void AddControlTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -87,6 +105,8 @@ namespace csModbusViewer
                 this.Controls.Add(mbView);
             }
             this.ModbusViewList = ModbusViewList;
+            this._Modified = false;
+
         }
 
         public void EnableDesignMode(DeviceType ViewerType, PropertyGrid properties)
@@ -108,6 +128,12 @@ namespace csModbusViewer
                 mbView.setDesignMode(true);
                 controldesigner.AddControl(mbView);
             }
+            controldesigner.AnyValueChangedEvent += Controldesigner_AnyValueChangedEvent;
+        }
+
+        private void Controldesigner_AnyValueChangedEvent(object s, PropertyValueChangedEventArgs e)
+        {
+            this.Modified = true;
         }
 
         private void CreateContextMenu()
@@ -136,6 +162,7 @@ namespace csModbusViewer
             Controls.Add(NewModbusView);
             ModbusViewList.Add(NewModbusView);
             controldesigner.AddControl(NewModbusView, true);
+            Modified = true;
         }
 
         private void DesignContextMenu_DeleteControlEvent(object sender, MouseEventArgs e)
@@ -147,6 +174,7 @@ namespace csModbusViewer
                 this.Controls.Remove(mbView);
                 mbView.Dispose();
                 controldesigner.DeleteControl(delCover);
+                Modified = true;
             }
         }
 

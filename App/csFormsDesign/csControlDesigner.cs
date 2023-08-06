@@ -14,6 +14,8 @@ namespace csFormsDesign
     /// </summary>
     class csControlDesigner
     {
+        public event PropertyValueChangedEventHandler AnyValueChangedEvent;
+
         private List<csControlCover> ControlCoverList = new List<csControlCover>();
         private csControlCover selectedCover;
         private PropertyGrid properties;
@@ -36,6 +38,7 @@ namespace csFormsDesign
                     properties.SelectedObject = new mbViewProperties(selectedCover.assignedControl); 
                 }
                 selectedCover.PropertyChanged();
+                AnyValueChangedEvent?.Invoke(s, e);
             }
         }
 
@@ -115,8 +118,8 @@ namespace csFormsDesign
             }
             selectedCover = cover;
             selectedCover.CoversSelect();
-            //properties.SelectedObject =  clickedCover.assignedControl;  // nur wenn alle Properties angezeigt werden sollem
-            properties.SelectedObject = new mbViewProperties(cover.assignedControl); // meine Auswahl
+            //properties.SelectedObject =  clickedCover.assignedControl;  // only if all properties are to be displayed
+            properties.SelectedObject = new mbViewProperties(cover.assignedControl); // my selection
         }
     }
 }

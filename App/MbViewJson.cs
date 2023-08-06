@@ -58,7 +58,7 @@ namespace csModbusViewer
             }
         }
 
-        public void Serialize(MbViewProfile mbProfile)
+        public void Serialize(MbViewProfile mbProfile, DeviceType newType = DeviceType.DEFAULT)
         {
             var settings = new JsonSerializerSettings {
                 ContractResolver = new ModbusViewContractResolver(),
@@ -67,16 +67,22 @@ namespace csModbusViewer
                 DefaultValueHandling = DefaultValueHandling.Ignore
             };
 
+            string actualType = mbProfile.DeviceType;
+            if (newType != DeviceType.DEFAULT) {
+                mbProfile.DeviceType = newType.ToString();
+            }
             string jsonStr = JsonConvert.SerializeObject(mbProfile, Formatting.Indented, settings);
-            if (mbProfile.DeviceType == csModbusLib.DeviceType.MASTER.ToString()) {
+            if (actualType == csModbusLib.DeviceType.MASTER.ToString()) {
                 jsonStr = jsonStr.Replace("csModbusView.Master", "csModbusView.");
-            } else if (mbProfile.DeviceType == csModbusLib.DeviceType.SLAVE.ToString()) {
+            } else if (actualType == csModbusLib.DeviceType.SLAVE.ToString()) {
                 jsonStr = jsonStr.Replace("csModbusView.Slave", "csModbusView.");
             } else {
                 throw new Exception("unknown Devicetype ");
             }
             System.IO.File.WriteAllText(jsonFileName, jsonStr);
-          }
+        }
+
+        
 
         public MbViewProfile Deserialize()
         {

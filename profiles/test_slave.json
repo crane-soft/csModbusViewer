@@ -1,6 +1,6 @@
 {
   "DeviceType": "SLAVE",
-  "ViewSize": "700, 501",
+  "ViewSize": "622, 497",
   "ModbusViewList": [
     {
       "$type": "csModbusView.HoldingRegsGridView, csModbusView",
@@ -33,7 +33,7 @@
       "Title": "INT32 Register",
       "BaseAddr": 40,
       "NumItems": 3,
-      "DataType": 2,
+      "DataType": 4,
       "AutoSize": false,
       "Location": "9, 173",
       "Size": "210, 74"
