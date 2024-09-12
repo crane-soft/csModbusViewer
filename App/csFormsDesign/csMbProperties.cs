@@ -13,9 +13,10 @@ namespace csFormsDesign
 {
     public class mbViewProperties : CustomTypeDescriptor
     {
+        // TODO part of this list already exits in class ModbusView
         public static string[] PropertyList = {
             /* ModbusView */
-            "Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames", "DataType", "Endianes",
+            "Title", "BaseAddr", "NumItems", "ItemColumns", "ItemNames", "DataType", "Endianes","WrOnly",
             /* Layout */
             // "Anchor", not working so far, due to split panel 
             "AutoSize","Location", "Size"

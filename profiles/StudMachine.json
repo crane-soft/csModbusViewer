@@ -1,10 +1,11 @@
 {
   "DeviceType": "MASTER",
-  "ViewSize": "612, 535",
+  "ViewSize": "740, 635",
   "ModbusViewList": [
     {
       "$type": "csModbusView.InputRegsGridView, csModbusView",
       "Title": "Alive",
+      "BaseAddr": "0",
       "NumItems": 2,
       "ItemNames": [
         "Ack",
@@ -16,7 +17,7 @@
     {
       "$type": "csModbusView.InputRegsGridView, csModbusView",
       "Title": "Axis-Status",
-      "BaseAddr": 2,
+      "BaseAddr": "2",
       "NumItems": 3,
       "ItemNames": [
         "StatusX",
@@ -29,14 +30,14 @@
     {
       "$type": "csModbusView.InputRegsGridView, csModbusView",
       "Title": "Positions",
-      "BaseAddr": 5,
+      "BaseAddr": "5",
       "NumItems": 3,
       "ItemNames": [
         "PosX",
         "PosY",
         "PosZ"
       ],
-      "DataType": 5,
+      "DataType": 7,
       "AutoSize": false,
       "Location": "156, 1",
       "Size": "182, 74"
@@ -44,7 +45,7 @@
     {
       "$type": "csModbusView.InputRegsGridView, csModbusView",
       "Title": "Head Status",
-      "BaseAddr": 11,
+      "BaseAddr": "11",
       "NumItems": 4,
       "ItemNames": [
         "Head1",
@@ -58,7 +59,7 @@
     {
       "$type": "csModbusView.InputRegsGridView, csModbusView",
       "Title": "Machine Status",
-      "BaseAddr": 22,
+      "BaseAddr": "22",
       "NumItems": 5,
       "ItemNames": [
         "MachineState",
@@ -68,13 +69,14 @@
         "SaftyCircuit",
         "Count"
       ],
+      "DataType": 2,
       "Location": "9, 282",
       "Size": "174, 110"
     },
     {
       "$type": "csModbusView.InputRegsGridView, csModbusView",
       "Title": "Others",
-      "BaseAddr": 15,
+      "BaseAddr": "15",
       "NumItems": 7,
       "ItemNames": [
         "Moving",
@@ -91,6 +93,7 @@
     {
       "$type": "csModbusView.HoldingRegsGridView, csModbusView",
       "Title": "Machine Commands",
+      "BaseAddr": "0",
       "NumItems": 3,
       "ItemNames": [
         "CmdCounter",
@@ -104,7 +107,7 @@
     {
       "$type": "csModbusView.HoldingRegsGridView, csModbusView",
       "Title": "Move Params",
-      "BaseAddr": 3,
+      "BaseAddr": "3",
       "NumItems": 6,
       "ItemNames": [
         "TargetX",
@@ -122,7 +125,7 @@
     {
       "$type": "csModbusView.HoldingRegsGridView, csModbusView",
       "Title": "Head Params",
-      "BaseAddr": 15,
+      "BaseAddr": "15",
       "NumItems": 4,
       "ItemNames": [
         "Head",

@@ -77,9 +77,11 @@ namespace csModbusViewer
             csModbusLib.ErrorCodes ErrCode;
 
             foreach (MasterGridView mbView in _ModbusViewList) {
-                ErrCode = mbView.Update_ModbusData();
-                if (ErrCode != ErrorCodes.NO_ERROR)
-                    return ErrCode;
+                if (!mbView.WrOnly) {
+                    ErrCode = mbView.Update_ModbusData();
+                    if (ErrCode != ErrorCodes.NO_ERROR)
+                        return ErrCode;
+                }
             }
             return ErrorCodes.NO_ERROR;
         }
