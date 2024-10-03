@@ -1,0 +1,59 @@
+{
+  "DeviceType": "SLAVE",
+  "ViewSize": "770, 619",
+  "ModbusViewList": [
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "Holding Register",
+      "BaseAddr": "10",
+      "NumItems": 8,
+      "DataType": 0,
+      "Location": "15, 67",
+      "Size": "125, 164"
+    },
+    {
+      "$type": "csModbusView.CoilsGridView, csModbusView",
+      "Title": "Coils",
+      "BaseAddr": "10",
+      "NumItems": 8,
+      "ItemColumns": 4,
+      "Location": "10, 5",
+      "Size": "152, 56"
+    },
+    {
+      "$type": "csModbusView.InputRegsGridView, csModbusView",
+      "Title": "Input Register",
+      "BaseAddr": "20",
+      "NumItems": 5,
+      "Location": "148, 66",
+      "Size": "125, 110"
+    },
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "Float Register",
+      "BaseAddr": "40",
+      "NumItems": 3,
+      "DataType": 6,
+      "Location": "15, 245",
+      "Size": "125, 74"
+    },
+    {
+      "$type": "csModbusView.InputRegsGridView, csModbusView",
+      "Title": "Float Input Register",
+      "BaseAddr": "40",
+      "NumItems": 3,
+      "DataType": 6,
+      "Location": "153, 245",
+      "Size": "125, 74"
+    },
+    {
+      "$type": "csModbusView.DiscretInputsGridView, csModbusView",
+      "Title": "DiscretInputs",
+      "BaseAddr": "10",
+      "NumItems": 8,
+      "ItemColumns": 4,
+      "Location": "171, 5",
+      "Size": "152, 56"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "DeviceType": "MASTER",
+  "ViewSize": "828, 571",
+  "ModbusViewList": [
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "INT16 Register",
+      "BaseAddr": "10",
+      "NumItems": 8,
+      "Location": "2, 3",
+      "Size": "125, 164"
+    },
+    {
+      "$type": "csModbusView.CoilsGridView, csModbusView",
+      "Title": "LD3",
+      "BaseAddr": "10",
+      "WrOnly": true,
+      "Location": "154, 6",
+      "Size": "98, 38"
+    }
+  ]
+}

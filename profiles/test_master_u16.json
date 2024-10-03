@@ -1,0 +1,41 @@
+{
+  "DeviceType": "MASTER",
+  "ViewSize": "730, 560",
+  "ModbusViewList": [
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "INT16 Register",
+      "BaseAddr": 10,
+      "NumItems": 8,
+      "Location": "3, 3",
+      "Size": "125, 164"
+    },
+    {
+      "$type": "csModbusView.CoilsGridView, csModbusView",
+      "Title": "Coils",
+      "BaseAddr": 10,
+      "NumItems": 20,
+      "ItemColumns": 8,
+      "Location": "150, 3",
+      "Size": "224, 74"
+    },
+    {
+      "$type": "csModbusView.CoilsGridView, csModbusView",
+      "Title": "Coils",
+      "BaseAddr": 30,
+      "NumItems": 24,
+      "ItemColumns": 8,
+      "Location": "150, 85",
+      "Size": "224, 74"
+    },
+    {
+      "$type": "csModbusView.HoldingRegsGridView, csModbusView",
+      "Title": "INT16 Register",
+      "BaseAddr": 40,
+      "NumItems": 6,
+      "ItemColumns": 2,
+      "Location": "9, 173",
+      "Size": "170, 74"
+    }
+  ]
+}
