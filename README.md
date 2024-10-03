@@ -5,4 +5,4 @@ The viewer includes a designer and is therefore fully configurable by the user f
 A profile that has already been created can be used directly as a master or slave.
 The Viewer uses the json format to store the modbus profile information. 
 
-
+![grafik](https://github.com/user-attachments/assets/3edae4c9-7d70-42a5-8ce9-42df9b4794bf)
